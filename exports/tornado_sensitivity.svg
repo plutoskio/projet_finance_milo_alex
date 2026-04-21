@@ -1,78 +1,49 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="600" viewBox="0 0 1050 600">
-  <rect width="1050" height="600" fill="#ffffff"/>
-  <text x="90" y="38" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#1F4E5F">Tornado sensitivity - DCF value per share</text>
-  <text x="90" y="60" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6B7280">Each bar changes one assumption while keeping all others constant. Base case: EUR 44.5/share.</text>
-
-  <!-- chart constants: axis 38 to 51, base x = 589.5 -->
-  <line x1="250" y1="90" x2="250" y2="470" stroke="#20252B" stroke-width="1"/>
-  <line x1="250" y1="470" x2="930" y2="470" stroke="#20252B" stroke-width="1"/>
-
-  <!-- grid and x-axis -->
-  <g font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#6B7280">
-    <line x1="354.6" y1="90" x2="354.6" y2="470" stroke="#E6EBEF"/>
-    <text x="343" y="492">40</text>
-    <line x1="459.2" y1="90" x2="459.2" y2="470" stroke="#E6EBEF"/>
-    <text x="448" y="492">42</text>
-    <line x1="563.8" y1="90" x2="563.8" y2="470" stroke="#E6EBEF"/>
-    <text x="552" y="492">44</text>
-    <line x1="668.5" y1="90" x2="668.5" y2="470" stroke="#E6EBEF"/>
-    <text x="657" y="492">46</text>
-    <line x1="773.1" y1="90" x2="773.1" y2="470" stroke="#E6EBEF"/>
-    <text x="762" y="492">48</text>
-    <line x1="877.7" y1="90" x2="877.7" y2="470" stroke="#E6EBEF"/>
-    <text x="866" y="492">50</text>
-    <text x="575" y="530">EUR/share</text>
-  </g>
-
-  <!-- base line -->
-  <line x1="589.5" y1="90" x2="589.5" y2="470" stroke="#20252B" stroke-width="2"/>
-  <text x="600" y="105" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#20252B">Base EUR 44.5</text>
-
-  <!-- bars -->
-  <g font-family="Arial, Helvetica, sans-serif" font-size="12">
-    <!-- EBIT margin: low 40.4, high 48.5 -->
-    <text x="90" y="143" fill="#20252B" font-weight="700">Marge EBIT</text>
-    <rect x="376.9" y="120" width="212.6" height="28" fill="#D1495B"/>
-    <rect x="589.5" y="120" width="212.3" height="28" fill="#2A9D8F"/>
-    <text x="345" y="139" fill="#D1495B">40.4</text>
-    <text x="812" y="139" fill="#2A9D8F">48.5</text>
-
-    <!-- WACC: low 41.4, high 48.1 -->
-    <text x="90" y="203" fill="#20252B" font-weight="700">WACC</text>
-    <rect x="425.6" y="180" width="163.9" height="28" fill="#D1495B"/>
-    <rect x="589.5" y="180" width="187.9" height="28" fill="#2A9D8F"/>
-    <text x="394" y="199" fill="#D1495B">41.4</text>
-    <text x="787" y="199" fill="#2A9D8F">48.1</text>
-
-    <!-- Capex / CA: low 41.7, high 47.2 -->
-    <text x="90" y="263" fill="#20252B" font-weight="700">Capex / CA</text>
-    <rect x="445.4" y="240" width="144.1" height="28" fill="#D1495B"/>
-    <rect x="589.5" y="240" width="143.9" height="28" fill="#2A9D8F"/>
-    <text x="414" y="259" fill="#D1495B">41.7</text>
-    <text x="743" y="259" fill="#2A9D8F">47.2</text>
-
-    <!-- Terminal growth: low 42.1, high 47.2 -->
-    <text x="90" y="323" fill="#20252B" font-weight="700">Croissance terminale</text>
-    <rect x="465.0" y="300" width="124.5" height="28" fill="#D1495B"/>
-    <rect x="589.5" y="300" width="142.4" height="28" fill="#2A9D8F"/>
-    <text x="434" y="319" fill="#D1495B">42.1</text>
-    <text x="742" y="319" fill="#2A9D8F">47.2</text>
-
-    <!-- Revenue growth: low 42.5, high 46.5 -->
-    <text x="90" y="383" fill="#20252B" font-weight="700">Croissance CA</text>
-    <rect x="485.6" y="360" width="103.9" height="28" fill="#D1495B"/>
-    <rect x="589.5" y="360" width="107.4" height="28" fill="#2A9D8F"/>
-    <text x="455" y="379" fill="#D1495B">42.5</text>
-    <text x="707" y="379" fill="#2A9D8F">46.5</text>
-  </g>
-
-  <!-- Legend -->
-  <g font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#20252B">
-    <rect x="90" y="520" width="14" height="14" fill="#D1495B"/>
-    <text x="110" y="531">Downside value</text>
-    <rect x="230" y="520" width="14" height="14" fill="#2A9D8F"/>
-    <text x="250" y="531">Upside value</text>
-  </g>
-
-  <text x="90" y="565" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6B7280">Source: project DCF model. Tested ranges: EBIT margin +/-100 bps, WACC +/-50 bps, terminal growth +/-50 bps, revenue growth +/-100 bps, capex/sales +/-50 bps.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="560" viewBox="0 0 1050 560">
+  <rect width="1050" height="560" fill="#ffffff"/>
+  <text x="70" y="38" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#1F4E5F">Tornado sensitivity - DCF value per share</text>
+  <text x="70" y="60" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6B7280">One variable changes at a time; revenue growth stays fixed at Forecast.</text>
+  <line x1="309.6" y1="95" x2="309.6" y2="430" stroke="#E6EBEF"/>
+  <text x="301.6" y="455" font-family="Arial" font-size="11" fill="#6B7280">38</text>
+  <line x1="415.1" y1="95" x2="415.1" y2="430" stroke="#E6EBEF"/>
+  <text x="407.1" y="455" font-family="Arial" font-size="11" fill="#6B7280">40</text>
+  <line x1="520.6" y1="95" x2="520.6" y2="430" stroke="#E6EBEF"/>
+  <text x="512.6" y="455" font-family="Arial" font-size="11" fill="#6B7280">42</text>
+  <line x1="626.1" y1="95" x2="626.1" y2="430" stroke="#E6EBEF"/>
+  <text x="618.1" y="455" font-family="Arial" font-size="11" fill="#6B7280">44</text>
+  <line x1="731.6" y1="95" x2="731.6" y2="430" stroke="#E6EBEF"/>
+  <text x="723.6" y="455" font-family="Arial" font-size="11" fill="#6B7280">46</text>
+  <line x1="837.2" y1="95" x2="837.2" y2="430" stroke="#E6EBEF"/>
+  <text x="829.2" y="455" font-family="Arial" font-size="11" fill="#6B7280">48</text>
+  <line x1="641.5" y1="95" x2="641.5" y2="430" stroke="#20252B" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="649.5" y="108" font-family="Arial" font-size="12" fill="#20252B">Base: EUR 44.3</text>
+  <text x="90" y="123" font-family="Arial" font-size="13" font-weight="700" fill="#20252B">Marge EBIT terminale 2030</text>
+  <rect x="369.1" y="105" width="272.3" height="22" fill="#D1495B" opacity="0.85"/>
+  <rect x="641.5" y="105" width="181.5" height="22" fill="#2A9D8F" opacity="0.90"/>
+  <text x="363.1" y="99" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">10.5%</text>
+  <text x="829.0" y="99" font-family="Arial" font-size="11" fill="#6B7280">13.0%</text>
+  <text x="363.1" y="122" text-anchor="end" font-family="Arial" font-size="11" fill="#20252B">39.1</text>
+  <text x="829.0" y="122" font-family="Arial" font-size="11" fill="#20252B">47.7</text>
+  <text x="90" y="201" font-family="Arial" font-size="13" font-weight="700" fill="#20252B">WACC</text>
+  <rect x="476.4" y="183" width="165.0" height="22" fill="#D1495B" opacity="0.85"/>
+  <rect x="641.5" y="183" width="189.4" height="22" fill="#2A9D8F" opacity="0.90"/>
+  <text x="470.4" y="177" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">9.3%</text>
+  <text x="836.9" y="177" font-family="Arial" font-size="11" fill="#6B7280">8.3%</text>
+  <text x="470.4" y="200" text-anchor="end" font-family="Arial" font-size="11" fill="#20252B">41.2</text>
+  <text x="836.9" y="200" font-family="Arial" font-size="11" fill="#20252B">47.9</text>
+  <text x="90" y="279" font-family="Arial" font-size="13" font-weight="700" fill="#20252B">Croissance terminale</text>
+  <rect x="516.0" y="261" width="125.5" height="22" fill="#D1495B" opacity="0.85"/>
+  <rect x="641.5" y="261" width="144.0" height="22" fill="#2A9D8F" opacity="0.90"/>
+  <text x="510.0" y="255" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">1.0%</text>
+  <text x="791.4" y="255" font-family="Arial" font-size="11" fill="#6B7280">2.0%</text>
+  <text x="510.0" y="278" text-anchor="end" font-family="Arial" font-size="11" fill="#20252B">41.9</text>
+  <text x="791.4" y="278" font-family="Arial" font-size="11" fill="#20252B">47.0</text>
+  <text x="90" y="357" font-family="Arial" font-size="13" font-weight="700" fill="#20252B">Capex / CA terminal 2030</text>
+  <rect x="518.3" y="339" width="123.2" height="22" fill="#D1495B" opacity="0.85"/>
+  <rect x="641.5" y="339" width="123.2" height="22" fill="#2A9D8F" opacity="0.90"/>
+  <text x="512.3" y="333" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">7.5%</text>
+  <text x="770.6" y="333" font-family="Arial" font-size="11" fill="#6B7280">6.5%</text>
+  <text x="512.3" y="356" text-anchor="end" font-family="Arial" font-size="11" fill="#20252B">42.0</text>
+  <text x="770.6" y="356" font-family="Arial" font-size="11" fill="#20252B">46.6</text>
+  <text x="90" y="515" font-family="Arial" font-size="13" fill="#20252B">Readout: margin is the biggest driver; WACC is second. Capex and terminal growth matter, but less than operating margin restoration.</text>
+  <text x="70" y="535" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6B7280">Source: Michelin valuation model workbook, Tornado logic from Base vs one-variable changes.</text>
 </svg>

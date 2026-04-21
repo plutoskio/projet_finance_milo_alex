@@ -2,11 +2,21 @@ from __future__ import annotations
 
 from html import escape
 from pathlib import Path
+import re
+
+from openpyxl import load_workbook
 
 
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "exports"
 OUT.mkdir(exist_ok=True)
+MODEL_XLSX = ROOT / "excel_model" / "Michelin_valuation_model.xlsx"
+LEGACY_REMOVED_CHARTS = [
+    "drivers_risks_heatmap.svg",
+    "peer_screening_matrix.svg",
+    "wacc_build_up.svg",
+    "investment_scorecard.svg",
+]
 
 BLUE = "#1F4E5F"
 TEAL = "#2A9D8F"
@@ -32,6 +42,393 @@ def header(title: str, subtitle: str, width: int = 1050, height: int = 620) -> s
 
 def footer(source: str, y: int = 590) -> str:
     return f'  <text x="70" y="{y}" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="{GRAY}">{escape(source)}</text>\n</svg>\n'
+
+
+def scenario_model_values() -> dict:
+    wb = load_workbook(MODEL_XLSX, data_only=False)
+    hist = wb["Historical"]
+    forecast = wb["Forecast"]
+    wacc_ws = wb["WACC"]
+    sensitivity = wb["Sensitivity"]
+
+    hist_sales = float(hist["G4"].value)
+    share_price = float(wacc_ws["B5"].value)
+    shares = float(wacc_ws["B6"].value)
+    net_debt = float(hist["G18"].value)
+    risk_free = float(wacc_ws["B10"].value)
+    erp = float(wacc_ws["B11"].value)
+    beta = float(wacc_ws["B12"].value)
+    pre_tax_cost_debt = float(wacc_ws["B14"].value)
+    tax_rate = float(wacc_ws["B15"].value)
+    market_cap = share_price * shares
+    enterprise_value_market = market_cap + net_debt
+    base_wacc = ((risk_free + beta * erp) * (market_cap / enterprise_value_market)) + (
+        pre_tax_cost_debt * (1 - tax_rate) * (net_debt / enterprise_value_market)
+    )
+    lookup = {
+        "Forecast!F8": float(forecast["F8"].value),
+        "Forecast!F14": float(forecast["F14"].value),
+        "WACC!B19": base_wacc,
+        "WACC!B20": float(wacc_ws["B20"].value),
+    }
+
+    def resolve_simple_formula(value):
+        if isinstance(value, (int, float)):
+            return float(value)
+        if not isinstance(value, str):
+            raise ValueError(f"Unsupported scenario value: {value!r}")
+        match = re.fullmatch(r"=(Forecast!F8|Forecast!F14|WACC!B19|WACC!B20)([+-]\d+(?:\.\d+)?)?", value)
+        if not match:
+            raise ValueError(f"Unsupported scenario formula: {value}")
+        base = lookup[match.group(1)]
+        offset = float(match.group(2) or 0.0)
+        return base + offset
+
+    growth = [float(forecast[cell].value) for cell in ["B5", "C5", "D5", "E5", "F5"]]
+    dna_rates = [float(forecast[cell].value) for cell in ["B12", "C12", "D12", "E12", "F12"]]
+    base_margin_2026 = float(forecast["B8"].value)
+    base_capex_2026 = float(forecast["B14"].value)
+
+    sales = []
+    prev_sales = hist_sales
+    for g in growth:
+        prev_sales = prev_sales * (1 + g)
+        sales.append(prev_sales)
+
+    scenarios = []
+    for row, name in zip([5, 6, 7], ["Bear", "Base", "Bull"]):
+        margin_terminal = resolve_simple_formula(sensitivity[f"B{row}"].value)
+        capex_terminal = resolve_simple_formula(sensitivity[f"C{row}"].value)
+        scenario_wacc = resolve_simple_formula(sensitivity[f"D{row}"].value)
+        terminal_growth = resolve_simple_formula(sensitivity[f"E{row}"].value)
+
+        margins = [base_margin_2026] + [
+            base_margin_2026 + (margin_terminal - base_margin_2026) * i / 4 for i in range(1, 5)
+        ]
+        capex_rates = [base_capex_2026] + [
+            base_capex_2026 + (capex_terminal - base_capex_2026) * i / 4 for i in range(1, 5)
+        ]
+
+        fcff = []
+        prev_sales = hist_sales
+        for idx, year_sales in enumerate(sales):
+            ebit = year_sales * margins[idx]
+            nopat = ebit * (1 - tax_rate)
+            d_and_a = year_sales * dna_rates[idx]
+            capex = year_sales * capex_rates[idx]
+            delta_bfr = (year_sales - prev_sales) * 0.01
+            fcff.append(nopat + d_and_a - capex - delta_bfr)
+            prev_sales = year_sales
+
+        discount_factors = [1 / ((1 + scenario_wacc) ** (i + 1)) for i in range(5)]
+        pv_fcff = sum(f * d for f, d in zip(fcff, discount_factors))
+        terminal_value = fcff[-1] * (1 + terminal_growth) / (scenario_wacc - terminal_growth)
+        enterprise_value = pv_fcff + terminal_value * discount_factors[-1]
+        equity_value = enterprise_value - net_debt
+        price = equity_value / shares
+        upside = price / share_price - 1
+
+        scenarios.append(
+            {
+                "name": name,
+                "price": price,
+                "upside": upside,
+            }
+        )
+
+    return {"share_price": share_price, "shares": shares, "scenarios": scenarios}
+
+
+def scenario_dcf_values() -> str:
+    payload = scenario_model_values()
+    current_price = payload["share_price"]
+    scenarios = payload["scenarios"]
+    width, height = 1000, 560
+    x0, y0, w, h = 120, 90, 780, 340
+    colors = {"Bear": RED, "Base": TEAL, "Bull": BLUE}
+    max_val = max(65.0, max(item["price"] for item in scenarios) + 7.0)
+
+    def yp(v: float) -> float:
+        return y0 + h - (v / max_val) * h
+
+    s = header(
+        "Scenario DCF - value per share",
+        "Growth stays fixed at Forecast. Bear / Base / Bull vary terminal margin, Capex/CA, WACC and terminal growth.",
+        width=width,
+        height=height,
+    )
+    s += f'\n  <line x1="{x0}" y1="{y0+h}" x2="{x0+w}" y2="{y0+h}" stroke="{DARK}" stroke-width="1.2"/>\n'
+    s += f'  <line x1="{x0}" y1="{y0}" x2="{x0}" y2="{y0+h}" stroke="{DARK}" stroke-width="1.2"/>\n'
+    s += '  <g font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#6B7280">\n'
+    tick = 0
+    while tick <= int(max_val):
+        y = yp(tick)
+        s += f'    <line x1="{x0}" y1="{y:.1f}" x2="{x0+w}" y2="{y:.1f}" stroke="{MID}" stroke-width="1"/>\n'
+        s += f'    <text x="{76 if tick >= 10 else 82}" y="{y+4:.1f}">{tick}</text>\n'
+        tick += 10
+    s += f'    <text x="63" y="{y0+5}">EUR/share</text>\n'
+    s += "  </g>\n"
+
+    y_price = yp(current_price)
+    s += f'  <line x1="{x0}" y1="{y_price:.1f}" x2="{x0+w}" y2="{y_price:.1f}" stroke="{RED}" stroke-width="2" stroke-dasharray="6 4"/>\n'
+    s += f'  <text x="{x0+w+5}" y="{y_price+3:.1f}" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="{RED}">Current price EUR {current_price:.1f}</text>\n'
+
+    bar_positions = [235, 440, 645]
+    for item, x in zip(scenarios, bar_positions):
+        price = item["price"]
+        y = yp(price)
+        bh = y0 + h - y
+        label = f"EUR {price:.1f}"
+        upside = f"{item['upside']:+.1%} upside"
+        s += f'  <rect x="{x}" y="{y:.1f}" width="120" height="{bh:.1f}" fill="{colors[item["name"]]}"/>\n'
+        s += f'  <text x="{x+60}" y="{y-12:.1f}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="{DARK}">{label}</text>\n'
+        s += f'  <text x="{x+60}" y="462" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="{DARK}">{item["name"]}</text>\n'
+        s += f'  <text x="{x+60}" y="483" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="{GRAY}">{upside}</text>\n'
+
+    s += footer("Source: Michelin valuation model workbook, Sensitivity sheet.", y=535)
+    return s
+
+
+def buyback_model_values() -> dict:
+    payload = scenario_model_values()
+    share_price = payload["share_price"]
+    shares = payload["shares"]
+    base_price = next(item["price"] for item in payload["scenarios"] if item["name"] == "Base")
+    program = 2000.0
+    repurchased = program / share_price
+    post_shares = shares - repurchased
+    share_reduction = repurchased / shares
+    eps_accretion = shares / post_shares - 1
+    post_price = ((base_price * shares) - program) / post_shares
+    dcf_accretion = post_price / base_price - 1
+    return {
+        "share_price": share_price,
+        "shares": shares,
+        "program": program,
+        "base_price": base_price,
+        "repurchased": repurchased,
+        "post_shares": post_shares,
+        "share_reduction": share_reduction,
+        "eps_accretion": eps_accretion,
+        "post_price": post_price,
+        "dcf_accretion": dcf_accretion,
+    }
+
+
+def buyback_impact() -> str:
+    data = buyback_model_values()
+    width, height = 1120, 640
+    s = header(
+        "Illustrative EUR 2bn buyback impact",
+        f"At EUR {data['share_price']:.2f}/share, EUR 2.0bn of repurchases would reduce share count by about {data['share_reduction']:.1%}.",
+        width=width,
+        height=height,
+    )
+
+    # Left section: share count bridge
+    s += f'  <text x="95" y="108" font-family="Arial" font-size="16" font-weight="700" fill="{BLUE}">Share count bridge</text>\n'
+    left_x, bar_x, max_w = 95, 270, 430
+    top_y = 170
+    current_shares = data["shares"]
+    repurchased = data["repurchased"]
+    post_shares = data["post_shares"]
+    max_shares = current_shares
+
+    rows = [
+        ("Current shares", current_shares, BLUE, f"{current_shares:.1f}m"),
+        ("Repurchased", repurchased, RED, f"-{repurchased:.1f}m"),
+        ("Pro forma shares", post_shares, TEAL, f"{post_shares:.1f}m"),
+    ]
+    for i, (label, value, color, value_label) in enumerate(rows):
+        y = top_y + i * 95
+        bar_w = max_w * value / max_shares
+        s += f'  <text x="{left_x}" y="{y+20}" font-family="Arial" font-size="13" font-weight="700" fill="{DARK}">{escape(label)}</text>\n'
+        s += f'  <rect x="{bar_x}" y="{y}" width="{bar_w:.1f}" height="34" fill="{color}" rx="3"/>\n'
+        if label == "Repurchased":
+            s += f'  <text x="{bar_x + bar_w + 14:.1f}" y="{y+22}" font-family="Arial" font-size="13" font-weight="700" fill="{color}">{value_label}</text>\n'
+        else:
+            s += f'  <text x="{bar_x + bar_w + 16:.1f}" y="{y+22}" font-family="Arial" font-size="13" font-weight="700" fill="{color}">{value_label}</text>\n'
+
+    s += f'  <rect x="95" y="438" width="645" height="62" fill="{LIGHT}" stroke="{MID}"/>\n'
+    s += f'  <text x="115" y="465" font-family="Arial" font-size="13" fill="{DARK}">Share count falls by {data["share_reduction"]:.1%}; with constant net income, EPS rises by about {data["eps_accretion"]:.1%}.</text>\n'
+    s += f'  <text x="115" y="487" font-family="Arial" font-size="13" fill="{DARK}">This is optical accretion first; value creation depends on the buyback price versus intrinsic value.</text>\n'
+
+    # Right section: value per share read-across
+    right_x = 790
+    s += f'  <text x="{right_x}" y="108" font-family="Arial" font-size="16" font-weight="700" fill="{BLUE}">Value per share read-across</text>\n'
+
+    card_w, card_h = 255, 84
+    card_y1 = 145
+    cards = [
+        ("DCF / share before buyback", data["base_price"], BLUE, card_y1),
+        ("DCF / share after cash spend", data["post_price"], TEAL, card_y1 + 108),
+    ]
+    for label, value, color, y in cards:
+        s += f'  <rect x="{right_x}" y="{y}" width="{card_w}" height="{card_h}" fill="{LIGHT}" stroke="{MID}"/>\n'
+        s += f'  <text x="{right_x+22}" y="{y+28}" font-family="Arial" font-size="12" fill="{GRAY}">{escape(label)}</text>\n'
+        s += f'  <text x="{right_x+22}" y="{y+60}" font-family="Arial" font-size="28" font-weight="700" fill="{color}">EUR {value:.1f}</text>\n'
+
+    s += f'  <line x1="{right_x+80}" y1="385" x2="{right_x+210}" y2="385" stroke="{TEAL}" stroke-width="5"/>\n'
+    s += f'  <polygon points="{right_x+210},365 {right_x+210},405 {right_x+255},385" fill="{TEAL}"/>\n'
+    s += f'  <text x="{right_x+115}" y="438" text-anchor="middle" font-family="Arial" font-size="26" font-weight="700" fill="{TEAL}">+{data["dcf_accretion"]:.1%}</text>\n'
+    s += f'  <text x="{right_x+115}" y="462" text-anchor="middle" font-family="Arial" font-size="12" fill="{DARK}">Illustrative DCF/share accretion</text>\n'
+
+    s += f'  <rect x="{right_x}" y="500" width="{card_w}" height="82" fill="#ffffff" stroke="{MID}"/>\n'
+    s += f'  <text x="{right_x+22}" y="530" font-family="Arial" font-size="12" font-weight="700" fill="{DARK}">Key condition</text>\n'
+    s += f'  <text x="{right_x+22}" y="554" font-family="Arial" font-size="12" fill="{DARK}">Buybacks create value only if shares</text>\n'
+    s += f'  <text x="{right_x+22}" y="575" font-family="Arial" font-size="12" fill="{DARK}">are repurchased below intrinsic value.</text>\n'
+
+    s += f'  <text x="70" y="606" font-family="Arial" font-size="13" fill="{DARK}">Readout: the buyback can reinforce the Buy case, but the core thesis still needs margin recovery and strong FCF.</text>\n'
+    s += footer(
+        f"Source: Michelin valuation model workbook. Illustrative calculation at EUR {data['share_price']:.2f}/share and {data['shares']:.2f}m shares.",
+        y=628,
+    )
+    return s
+
+
+def tornado_model_values() -> dict:
+    wb = load_workbook(MODEL_XLSX, data_only=False)
+    hist = wb["Historical"]
+    forecast = wb["Forecast"]
+    wacc_ws = wb["WACC"]
+    sensitivity = wb["Sensitivity"]
+
+    hist_sales = float(hist["G4"].value)
+    share_price = float(wacc_ws["B5"].value)
+    shares = float(wacc_ws["B6"].value)
+    net_debt = float(hist["G18"].value)
+    risk_free = float(wacc_ws["B10"].value)
+    erp = float(wacc_ws["B11"].value)
+    beta = float(wacc_ws["B12"].value)
+    pre_tax_cost_debt = float(wacc_ws["B14"].value)
+    tax_rate = float(wacc_ws["B15"].value)
+    market_cap = share_price * shares
+    enterprise_value_market = market_cap + net_debt
+    base_wacc = ((risk_free + beta * erp) * (market_cap / enterprise_value_market)) + (
+        pre_tax_cost_debt * (1 - tax_rate) * (net_debt / enterprise_value_market)
+    )
+    growth = [float(forecast[cell].value) for cell in ["B5", "C5", "D5", "E5", "F5"]]
+    dna_rates = [float(forecast[cell].value) for cell in ["B12", "C12", "D12", "E12", "F12"]]
+    base_margin_2026 = float(forecast["B8"].value)
+    base_margin_terminal = float(forecast["F8"].value)
+    base_capex_2026 = float(forecast["B14"].value)
+    base_capex_terminal = float(forecast["F14"].value)
+    base_g = float(wacc_ws["B20"].value)
+
+    def price(
+        margin_terminal: float = base_margin_terminal,
+        capex_terminal: float = base_capex_terminal,
+        wacc: float = base_wacc,
+        terminal_growth: float = base_g,
+    ) -> float:
+        sales = []
+        prev_sales = hist_sales
+        for gr in growth:
+            prev_sales = prev_sales * (1 + gr)
+            sales.append(prev_sales)
+        margins = [base_margin_2026] + [
+            base_margin_2026 + (margin_terminal - base_margin_2026) * i / 4 for i in range(1, 5)
+        ]
+        capex_rates = [base_capex_2026] + [
+            base_capex_2026 + (capex_terminal - base_capex_2026) * i / 4 for i in range(1, 5)
+        ]
+        fcff = []
+        prev_sales = hist_sales
+        for idx, year_sales in enumerate(sales):
+            ebit = year_sales * margins[idx]
+            nopat = ebit * (1 - tax_rate)
+            d_and_a = year_sales * dna_rates[idx]
+            capex = year_sales * capex_rates[idx]
+            delta_bfr = (year_sales - prev_sales) * 0.01
+            fcff.append(nopat + d_and_a - capex - delta_bfr)
+            prev_sales = year_sales
+        discount_factors = [1 / ((1 + wacc) ** (i + 1)) for i in range(5)]
+        pv_fcff = sum(f * d for f, d in zip(fcff, discount_factors))
+        terminal_value = fcff[-1] * (1 + terminal_growth) / (wacc - terminal_growth)
+        enterprise_value = pv_fcff + terminal_value * discount_factors[-1]
+        equity_value = enterprise_value - net_debt
+        return equity_value / shares
+
+    base_price = price()
+    rows = [
+        {
+            "label": "Marge EBIT terminale 2030",
+            "low_label": "10.5%",
+            "high_label": "13.0%",
+            "low_value": price(margin_terminal=float(forecast["F8"].value) - 0.015),
+            "high_value": price(margin_terminal=float(forecast["F8"].value) + 0.010),
+        },
+        {
+            "label": "WACC",
+            "low_label": f"{(base_wacc + 0.005):.1%}",
+            "high_label": f"{(base_wacc - 0.005):.1%}",
+            "low_value": price(wacc=base_wacc + 0.005),
+            "high_value": price(wacc=base_wacc - 0.005),
+        },
+        {
+            "label": "Croissance terminale",
+            "low_label": "1.0%",
+            "high_label": "2.0%",
+            "low_value": price(terminal_growth=0.010),
+            "high_value": price(terminal_growth=0.020),
+        },
+        {
+            "label": "Capex / CA terminal 2030",
+            "low_label": "7.5%",
+            "high_label": "6.5%",
+            "low_value": price(capex_terminal=float(forecast["F14"].value) + 0.005),
+            "high_value": price(capex_terminal=float(forecast["F14"].value) - 0.005),
+        },
+    ]
+    for row in rows:
+        row["amplitude"] = abs(row["high_value"] - row["low_value"])
+    rows.sort(key=lambda x: x["amplitude"], reverse=True)
+    return {"base_price": base_price, "rows": rows}
+
+
+def tornado_sensitivity() -> str:
+    payload = tornado_model_values()
+    base_price = payload["base_price"]
+    rows = payload["rows"]
+    width, height = 1050, 560
+    x0, y0, w = 290, 115, 620
+    minv = min(min(r["low_value"], r["high_value"]) for r in rows) - 1.5
+    maxv = max(max(r["low_value"], r["high_value"]) for r in rows) + 1.5
+
+    def xp(v: float) -> float:
+        return x0 + (v - minv) / (maxv - minv) * w
+
+    s = header(
+        "Tornado sensitivity - DCF value per share",
+        "One variable changes at a time; revenue growth stays fixed at Forecast.",
+        width=width,
+        height=height,
+    )
+    tick = round(minv)
+    while tick <= round(maxv):
+        x = xp(tick)
+        s += f'  <line x1="{x:.1f}" y1="95" x2="{x:.1f}" y2="430" stroke="{MID}"/>\n'
+        s += f'  <text x="{x-8:.1f}" y="455" font-family="Arial" font-size="11" fill="{GRAY}">{tick:.0f}</text>\n'
+        tick += 2
+    s += f'  <line x1="{xp(base_price):.1f}" y1="95" x2="{xp(base_price):.1f}" y2="430" stroke="{DARK}" stroke-width="2" stroke-dasharray="6 4"/>\n'
+    s += f'  <text x="{xp(base_price)+8:.1f}" y="108" font-family="Arial" font-size="12" fill="{DARK}">Base: EUR {base_price:.1f}</text>\n'
+
+    for i, row in enumerate(rows):
+        y = y0 + i * 78
+        low, high = row["low_value"], row["high_value"]
+        lo_x, hi_x = xp(low), xp(high)
+        mid_x = xp(base_price)
+        s += f'  <text x="90" y="{y+8}" font-family="Arial" font-size="13" font-weight="700" fill="{DARK}">{escape(row["label"])}</text>\n'
+        s += f'  <rect x="{min(lo_x, mid_x):.1f}" y="{y-10}" width="{abs(mid_x-lo_x):.1f}" height="22" fill="{RED}" opacity="0.85"/>\n'
+        s += f'  <rect x="{min(mid_x, hi_x):.1f}" y="{y-10}" width="{abs(hi_x-mid_x):.1f}" height="22" fill="{TEAL}" opacity="0.90"/>\n'
+        s += f'  <text x="{lo_x-6:.1f}" y="{y-16}" text-anchor="end" font-family="Arial" font-size="11" fill="{GRAY}">{row["low_label"]}</text>\n'
+        s += f'  <text x="{hi_x+6:.1f}" y="{y-16}" font-family="Arial" font-size="11" fill="{GRAY}">{row["high_label"]}</text>\n'
+        s += f'  <text x="{lo_x-6:.1f}" y="{y+7}" text-anchor="end" font-family="Arial" font-size="11" fill="{DARK}">{low:.1f}</text>\n'
+        s += f'  <text x="{hi_x+6:.1f}" y="{y+7}" font-family="Arial" font-size="11" fill="{DARK}">{high:.1f}</text>\n'
+
+    s += f'  <text x="90" y="515" font-family="Arial" font-size="13" fill="{DARK}">Readout: margin is the biggest driver; WACC is second. Capex and terminal growth matter, but less than operating margin restoration.</text>\n'
+    s += footer("Source: Michelin valuation model workbook, Tornado logic from Base vs one-variable changes.", y=535)
+    return s
 
 
 def market_segmentation() -> str:
@@ -333,16 +730,22 @@ def wacc_build_up() -> str:
 
 
 def football_field_summary() -> str:
+    scenario_payload = scenario_model_values()
+    dcf_low = next(item["price"] for item in scenario_payload["scenarios"] if item["name"] == "Bear")
+    dcf_mid = next(item["price"] for item in scenario_payload["scenarios"] if item["name"] == "Base")
+    dcf_high = next(item["price"] for item in scenario_payload["scenarios"] if item["name"] == "Bull")
+    comps_low, comps_mid, comps_high = 23.5, 36.1, 44.1
+    target = (comps_mid + dcf_mid) / 2
     ranges = [
         ("Cours actuel", 32.2, 32.2, 32.2, GRAY),
-        ("Comparables", 23.5, 36.1, 44.1, TEAL),
-        ("DCF sensitivity", 35.2, 44.5, 60.7, BLUE),
-        ("Objectif retenu", 40.3, 40.3, 40.3, RED),
+        ("Comparables", comps_low, comps_mid, comps_high, TEAL),
+        ("DCF scenarios", dcf_low, dcf_mid, dcf_high, BLUE),
+        ("Objectif retenu", target, target, target, RED),
     ]
     minv, maxv = 20, 65
     x0, y0, w = 230, 125, 660
     def xp(v): return x0 + (v - minv) / (maxv - minv) * w
-    s = header("Football field summary", "Valuation ranges by method, EUR/share.")
+    s = header("Football field summary", "Valuation ranges by method, EUR/share. DCF range now reflects Bear / Base / Bull scenarios.")
     for tick in [20, 30, 40, 50, 60]:
         x = xp(tick)
         s += f'  <line x1="{x:.1f}" y1="95" x2="{x:.1f}" y2="430" stroke="{MID}"/>\n'
@@ -353,8 +756,8 @@ def football_field_summary() -> str:
         s += f'  <rect x="{xp(low):.1f}" y="{y-8}" width="{max(3, xp(high)-xp(low)):.1f}" height="20" fill="{color}" opacity="0.85"/>\n'
         s += f'  <circle cx="{xp(mid):.1f}" cy="{y+2}" r="7" fill="{DARK}"/>\n'
         s += f'  <text x="{xp(high)+10:.1f}" y="{y+7}" font-family="Arial" font-size="11" fill="{GRAY}">{low:.1f} - {high:.1f}</text>\n'
-    s += f'  <text x="90" y="515" font-family="Arial" font-size="13" fill="{DARK}">Readout: the target price sits between peer valuation and DCF, while the DCF range shows asymmetric upside if margins normalize.</text>\n'
-    s += footer("Source: project valuation model.")
+    s += f'  <text x="90" y="515" font-family="Arial" font-size="13" fill="{DARK}">Readout: the target price sits between peer valuation and DCF, while the DCF range now reflects explicit Bear / Base / Bull scenarios rather than only WACC/g sensitivity.</text>\n'
+    s += footer("Source: Michelin valuation model workbook; comparables summary table.")
     return s
 
 
@@ -388,18 +791,22 @@ def main() -> None:
     charts = {
         "market_segmentation.svg": market_segmentation(),
         "competitive_positioning.svg": competitive_positioning(),
-        "drivers_risks_heatmap.svg": drivers_risks_heatmap(),
         "segment_mix_margin.svg": segment_mix_margin(),
         "historical_pnl_combo.svg": historical_pnl_combo(),
         "forecast_pnl_combo.svg": forecast_pnl_combo(),
-        "peer_screening_matrix.svg": peer_screening_matrix(),
-        "wacc_build_up.svg": wacc_build_up(),
+        "scenario_dcf_values.svg": scenario_dcf_values(),
+        "tornado_sensitivity.svg": tornado_sensitivity(),
+        "buyback_impact.svg": buyback_impact(),
         "football_field_summary.svg": football_field_summary(),
-        "investment_scorecard.svg": investment_scorecard(),
     }
     for name, svg in charts.items():
         save_svg(name, svg)
         print(OUT / name)
+    for name in LEGACY_REMOVED_CHARTS:
+        path = OUT / name
+        if path.exists():
+            path.unlink()
+            print(f"removed {path}")
 
 
 if __name__ == "__main__":

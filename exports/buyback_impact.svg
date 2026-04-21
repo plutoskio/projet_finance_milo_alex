@@ -1,51 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="620" viewBox="0 0 1050 620">
-  <rect width="1050" height="620" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="640" viewBox="0 0 1120 640">
+  <rect width="1120" height="640" fill="#ffffff"/>
   <text x="70" y="38" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#1F4E5F">Illustrative EUR 2bn buyback impact</text>
   <text x="70" y="60" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6B7280">At EUR 32.24/share, EUR 2.0bn of repurchases would reduce share count by about 9.1%.</text>
-
-  <text x="85" y="105" font-family="Arial" font-size="16" font-weight="700" fill="#1F4E5F">Share count bridge</text>
-  <line x1="145" y1="435" x2="650" y2="435" stroke="#20252B" stroke-width="1.2"/>
-  <line x1="145" y1="125" x2="145" y2="435" stroke="#20252B" stroke-width="1.2"/>
-
-  <g font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#20252B">
-    <text x="85" y="162" font-weight="700">Current shares</text>
-    <rect x="250" y="142" width="370" height="30" fill="#1F4E5F"/>
-    <text x="630" y="162" font-weight="700" fill="#1F4E5F">684.7m</text>
-
-    <text x="85" y="242" font-weight="700">Repurchased</text>
-    <rect x="250" y="222" width="34" height="30" fill="#D1495B"/>
-    <text x="295" y="242" font-weight="700" fill="#D1495B">-62.0m</text>
-
-    <text x="85" y="322" font-weight="700">Pro forma shares</text>
-    <rect x="250" y="302" width="337" height="30" fill="#2A9D8F"/>
-    <text x="597" y="322" font-weight="700" fill="#2A9D8F">622.7m</text>
-  </g>
-
-  <text x="85" y="386" font-family="Arial" font-size="13" fill="#20252B">The share count falls by 9.1%; with constant net income, EPS rises by about 10.0%.</text>
-
-  <text x="710" y="105" font-family="Arial" font-size="16" font-weight="700" fill="#1F4E5F">Value per share read-across</text>
-  <rect x="715" y="140" width="245" height="70" fill="#F6F8FA" stroke="#E6EBEF"/>
-  <text x="735" y="166" font-family="Arial" font-size="12" fill="#6B7280">DCF / share before buyback</text>
-  <text x="735" y="195" font-family="Arial" font-size="24" font-weight="700" fill="#1F4E5F">EUR 44.5</text>
-
-  <rect x="715" y="235" width="245" height="70" fill="#F6F8FA" stroke="#E6EBEF"/>
-  <text x="735" y="261" font-family="Arial" font-size="12" fill="#6B7280">DCF / share after cash spend</text>
-  <text x="735" y="290" font-family="Arial" font-size="24" font-weight="700" fill="#2A9D8F">EUR 45.7</text>
-
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L7,3 z" fill="#2A9D8F"/>
-    </marker>
-  </defs>
-  <path d="M780 335 L900 335" stroke="#2A9D8F" stroke-width="4" marker-end="url(#arrow)"/>
-  <text x="766" y="370" font-family="Arial" font-size="24" font-weight="700" fill="#2A9D8F">+2.7%</text>
-  <text x="765" y="392" font-family="Arial" font-size="12" fill="#20252B">Illustrative DCF/share accretion</text>
-
-  <rect x="715" y="430" width="245" height="72" fill="#ffffff" stroke="#E6EBEF"/>
-  <text x="735" y="456" font-family="Arial" font-size="12" fill="#20252B">Key condition:</text>
-  <text x="735" y="478" font-family="Arial" font-size="12" fill="#20252B">buybacks create value only if shares</text>
-  <text x="735" y="496" font-family="Arial" font-size="12" fill="#20252B">are bought below intrinsic value.</text>
-
-  <text x="70" y="568" font-family="Arial" font-size="13" fill="#20252B">Readout: the buyback can reinforce the Buy case, but the core thesis still needs margin recovery and strong FCF.</text>
-  <text x="70" y="590" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6B7280">Source: Michelin 2025 annual results; project valuation model. Illustrative calculation at EUR 32.24/share and 684.74m shares.</text>
+  <text x="95" y="108" font-family="Arial" font-size="16" font-weight="700" fill="#1F4E5F">Share count bridge</text>
+  <text x="95" y="190" font-family="Arial" font-size="13" font-weight="700" fill="#20252B">Current shares</text>
+  <rect x="270" y="170" width="430.0" height="34" fill="#1F4E5F" rx="3"/>
+  <text x="716.0" y="192" font-family="Arial" font-size="13" font-weight="700" fill="#1F4E5F">684.7m</text>
+  <text x="95" y="285" font-family="Arial" font-size="13" font-weight="700" fill="#20252B">Repurchased</text>
+  <rect x="270" y="265" width="39.0" height="34" fill="#D1495B" rx="3"/>
+  <text x="323.0" y="287" font-family="Arial" font-size="13" font-weight="700" fill="#D1495B">-62.0m</text>
+  <text x="95" y="380" font-family="Arial" font-size="13" font-weight="700" fill="#20252B">Pro forma shares</text>
+  <rect x="270" y="360" width="391.0" height="34" fill="#2A9D8F" rx="3"/>
+  <text x="677.0" y="382" font-family="Arial" font-size="13" font-weight="700" fill="#2A9D8F">622.7m</text>
+  <rect x="95" y="438" width="645" height="62" fill="#F6F8FA" stroke="#E6EBEF"/>
+  <text x="115" y="465" font-family="Arial" font-size="13" fill="#20252B">Share count falls by 9.1%; with constant net income, EPS rises by about 10.0%.</text>
+  <text x="115" y="487" font-family="Arial" font-size="13" fill="#20252B">This is optical accretion first; value creation depends on the buyback price versus intrinsic value.</text>
+  <text x="790" y="108" font-family="Arial" font-size="16" font-weight="700" fill="#1F4E5F">Value per share read-across</text>
+  <rect x="790" y="145" width="255" height="84" fill="#F6F8FA" stroke="#E6EBEF"/>
+  <text x="812" y="173" font-family="Arial" font-size="12" fill="#6B7280">DCF / share before buyback</text>
+  <text x="812" y="205" font-family="Arial" font-size="28" font-weight="700" fill="#1F4E5F">EUR 44.3</text>
+  <rect x="790" y="253" width="255" height="84" fill="#F6F8FA" stroke="#E6EBEF"/>
+  <text x="812" y="281" font-family="Arial" font-size="12" fill="#6B7280">DCF / share after cash spend</text>
+  <text x="812" y="313" font-family="Arial" font-size="28" font-weight="700" fill="#2A9D8F">EUR 45.5</text>
+  <line x1="870" y1="385" x2="1000" y2="385" stroke="#2A9D8F" stroke-width="5"/>
+  <polygon points="1000,365 1000,405 1045,385" fill="#2A9D8F"/>
+  <text x="905" y="438" text-anchor="middle" font-family="Arial" font-size="26" font-weight="700" fill="#2A9D8F">+2.7%</text>
+  <text x="905" y="462" text-anchor="middle" font-family="Arial" font-size="12" fill="#20252B">Illustrative DCF/share accretion</text>
+  <rect x="790" y="500" width="255" height="82" fill="#ffffff" stroke="#E6EBEF"/>
+  <text x="812" y="530" font-family="Arial" font-size="12" font-weight="700" fill="#20252B">Key condition</text>
+  <text x="812" y="554" font-family="Arial" font-size="12" fill="#20252B">Buybacks create value only if shares</text>
+  <text x="812" y="575" font-family="Arial" font-size="12" fill="#20252B">are repurchased below intrinsic value.</text>
+  <text x="70" y="606" font-family="Arial" font-size="13" fill="#20252B">Readout: the buyback can reinforce the Buy case, but the core thesis still needs margin recovery and strong FCF.</text>
+  <text x="70" y="628" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6B7280">Source: Michelin valuation model workbook. Illustrative calculation at EUR 32.24/share and 684.74m shares.</text>
 </svg>

@@ -21,9 +21,9 @@ Ce fichier Markdown sert de source de travail pour la présentation PowerPoint a
 | CA 2025 | EUR 26.0 Md |
 | Marge EBIT SECTOR MICHELIN | 10.5% |
 | FCF 2025 | EUR 2.2 Md |
-| Valeur DCF / action | EUR 44.5 |
-| Objectif central | EUR 40.3/action |
-| Rendement total estimé | 29.2% |
+| Valeur DCF / action | EUR 44.3 |
+| Objectif central | EUR 40.2/action |
+| Rendement total estimé | 29.0% |
 | Recommandation | Acheter |
 
 ## Thèse d'investissement
@@ -38,8 +38,8 @@ Ce fichier Markdown sert de source de travail pour la présentation PowerPoint a
 
 - Le scénario central retient une reprise prudente: croissance modérée du CA et marge EBIT remontant graduellement vers 12.0% en 2030.
 - Les comparables donnent une valeur de contrôle proche de EUR 36/action, sans signal de survalorisation évidente.
-- Le DCF donne EUR 44.5/action, soutenu par les FCFF explicites et la valeur terminale.
-- L'objectif retenu de EUR 40.3/action implique 24.9% de potentiel cours et 29.2% de rendement total avec dividende.
+- Le DCF donne EUR 44.3/action, soutenu par les FCFF explicites et la valeur terminale.
+- L'objectif retenu de EUR 40.2/action implique 24.7% de potentiel cours et 29.0% de rendement total avec dividende.
 
 ## Catalyseurs et risques
 
@@ -566,13 +566,13 @@ La construction du WACC doit rester lisible comme une suite d'hypothèses: coût
 
 | Indicateur | Valeur |
 |---|---:|
-| PV FCFF explicites | EUR 9.1 Md |
+| PV FCFF explicites | EUR 9.0 Md |
 | PV valeur terminale | EUR 23.7 Md |
-| EV DCF | EUR 32.8 Md |
-| EqV DCF (Fonds propres) | EUR 30.5 Md |
+| EV DCF | EUR 32.7 Md |
+| EqV DCF (Fonds propres) | EUR 30.3 Md |
 | Ratio EV / EqV | 1.08x |
-| Valeur / action | EUR 44.5 |
-| Potentiel de hausse | 38.0% |
+| Valeur / action | EUR 44.3 |
+| Potentiel de hausse | 37.4% |
 
 ## Détail FCFF
 
@@ -584,9 +584,9 @@ La construction du WACC doit rester lisible comme une suite d'hypothèses: coût
 ## Commentaires
 
 - Valeur terminale brute: EUR 36.1 Md.
-- Valeur des fonds propres (EqV) DCF: EUR 30.5 Md, après déduction d'environ EUR 2.3 Md de dette nette et ajustements.
+- Valeur des fonds propres (EqV) DCF: EUR 30.3 Md, après déduction d'environ EUR 2.3 Md de dette nette et ajustements.
 - Le ratio EV / EqV ressort à 1.08x, répondant à la consigne et confirmant le faible levier.
-- Sensibilité centrale WACC/g retrouve EUR 44.5 par action.
+- Le scénario central du DCF ressort à EUR 44.3 par action.
 - Le résultat est sensible au WACC, d'où la comparaison avec les comparables.
 
 **Source:** modèle Excel DCF.
@@ -599,48 +599,46 @@ La construction du WACC doit rester lisible comme une suite d'hypothèses: coût
 
 ## Scénario DCF
 
-Le graphique ci-dessous compare les trois scénarios DCF en valeur par action pour rendre l'écart baissier / central / haussier immédiatement lisible. Dans la nouvelle logique du modèle, la croissance du chiffre d'affaires 2026E-2030E reste celle de `Forecast` dans tous les cas; seuls la marge EBIT terminale 2030, le WACC et la croissance terminale varient.
+Le graphique ci-dessous compare les trois scénarios DCF en valeur par action pour rendre l'écart baissier / central / haussier immédiatement lisible. Dans la nouvelle logique du modèle, la croissance du chiffre d'affaires 2026E-2030E reste celle de `Forecast` dans tous les cas; seuls la marge EBIT terminale 2030, le `Capex / CA` terminal 2030, le WACC et la croissance terminale varient.
 
 ![Graphique des scénarios DCF en valeur par action](exports/scenario_dcf_values.svg)
 
-| Scénario | Hypothèse marché | Marge EBIT 2030 | WACC | Croissance terminale | Valeur / action | Potentiel vs cours |
-|---|---|---:|---:|---:|---:|---:|
-| Baissier | Pression persistante sur le mix et lecture plus prudente du risque | 10.5% | 9.3% | 1.0% | EUR 34.6 | +7.4% |
-| Central | Reprise graduelle cohérente avec le scénario de base du modèle | 12.0% | 8.8% | 1.5% | EUR 44.3 | +37.5% |
-| Haussier | Exécution plus forte sur le mix premium et hypothèses de marché plus favorables | 13.0% | 8.3% | 2.0% | EUR 55.2 | +71.1% |
+| Scénario | Hypothèse marché | Marge EBIT 2030 | Capex / CA 2030 | WACC | Croissance terminale | Valeur / action | Potentiel vs cours |
+|---|---|---:|---:|---:|---:|---:|---:|
+| Baissier | Pression persistante sur le mix et lecture plus prudente du risque | 10.5% | 7.5% | 9.3% | 1.0% | EUR 32.5 | +0.9% |
+| Central | Reprise graduelle cohérente avec le scénario de base du modèle | 12.0% | 7.0% | 8.8% | 1.5% | EUR 44.3 | +37.4% |
+| Haussier | Exécution plus forte sur le mix premium et hypothèses de marché plus favorables | 13.0% | 6.5% | 8.3% | 2.0% | EUR 57.8 | +79.4% |
 
 ## Lecture du scénario DCF
 
 - La **croissance du CA** n'est plus stressée dans cette table: elle reste identique à `Forecast`, car elle est traitée comme une hypothèse de court / moyen terme déjà posée dans le modèle.
-- Le **scénario baissier** ne dégrade donc que la marge terminale, le WACC et la croissance terminale. Il donne encore une valeur légèrement au-dessus du cours, à `EUR 34.6/action`.
-- Le **scénario central** correspond à la lecture de base du modèle: marge terminale à `12.0%`, WACC de base et croissance terminale de `1.5%`, pour `EUR 44.3/action`.
-- Le **scénario haussier** combine une marge terminale plus élevée, un WACC plus faible et une croissance terminale plus généreuse, ce qui porte la valeur à `EUR 55.2/action`.
+- Le **scénario baissier** dégrade la marge terminale, augmente le `Capex / CA`, relève le WACC et abaisse la croissance terminale. Il donne une valeur de `EUR 32.5/action`, soit presque le cours actuel.
+- Le **scénario central** correspond à la lecture de base du modèle: marge terminale à `12.0%`, `Capex / CA` terminal à `7.0%`, WACC de base et croissance terminale de `1.5%`, pour `EUR 44.3/action`.
+- Le **scénario haussier** combine une marge terminale plus élevée, un `Capex / CA` plus bas, un WACC plus faible et une croissance terminale plus généreuse, ce qui porte la valeur à `EUR 57.8/action`.
 
-**Source:** feuille `Sensitivity` du classeur Excel; croissance du CA reprise de `Forecast`; scénarios appliqués à la marge terminale 2030, au WACC et à la croissance terminale.
+**Source:** feuille `Sensitivity` du classeur Excel; croissance du CA reprise de `Forecast`; scénarios appliqués à la marge terminale 2030, au `Capex / CA` terminal 2030, au WACC et à la croissance terminale.
 
 ## Sensibilité tornado
 
-Le graphique ci-dessous classe les hypothèses selon leur impact sur la valeur DCF afin de montrer les vrais facteurs de sensibilité.
+Le graphique ci-dessous classe les hypothèses selon leur impact sur la valeur DCF afin de montrer les vrais facteurs de sensibilité. La logique est différente du tableau de scénarios: ici, **une seule variable change à la fois**, tandis que toutes les autres restent au niveau du scénario central.
 
 ![Graphique tornado de sensibilité du DCF Michelin](exports/tornado_sensitivity.svg)
 
 | Variable testée | Hypothèse basse | Hypothèse haute | Valeur basse | Valeur haute | Amplitude |
 |---|---|---|---:|---:|---:|
-| Marge EBIT | -100 bps chaque année | +100 bps chaque année | EUR 40.4 | EUR 48.5 | EUR 8.1 |
-| WACC | +50 bps | -50 bps | EUR 41.4 | EUR 48.1 | EUR 6.7 |
-| Capex / CA | +50 bps chaque année | -50 bps chaque année | EUR 41.7 | EUR 47.2 | EUR 5.5 |
-| Croissance terminale | -50 bps | +50 bps | EUR 42.1 | EUR 47.2 | EUR 5.1 |
-| Croissance CA | -100 bps chaque année | +100 bps chaque année | EUR 42.5 | EUR 46.5 | EUR 4.0 |
+| Marge EBIT terminale 2030 | 10.5% | 13.0% | EUR 39.1 | EUR 47.7 | EUR 8.6 |
+| WACC | 9.3% | 8.3% | EUR 41.2 | EUR 47.9 | EUR 6.7 |
+| Croissance terminale | 1.0% | 2.0% | EUR 41.9 | EUR 47.0 | EUR 5.1 |
+| Capex / CA terminal 2030 | 7.5% | 6.5% | EUR 42.0 | EUR 46.6 | EUR 4.7 |
 
 ## Lecture du tornado
 
 - La variable la plus importante est la **marge EBIT**: cela confirme que le cœur de la thèse d'investissement est la capacité de Michelin à restaurer ses marges après une année 2025 pénalisée par les volumes.
 - Le **WACC** est le deuxième facteur le plus sensible: une hausse des taux ou de la prime de risque réduit fortement la valeur actuelle des flux de trésorerie futurs.
-- Le **capex / CA** compte aussi, car Michelin est industriel: plus d'investissements absorbent plus de cash-flow disponible.
 - La **croissance terminale** influence surtout la valeur terminale, qui représente une grande partie de l'EV DCF.
-- La **croissance du CA** est moins sensible que la marge: pour Michelin, la qualité de la croissance et le mix sont plus importants que la croissance brute des volumes.
+- Le **capex / CA** compte aussi, car Michelin est industriel: plus d'investissements absorbent plus de cash-flow disponible, mais son impact reste plus modéré que celui de la marge et du WACC.
 
-**Message à retenir:** la recommandation Acheter dépend surtout de la normalisation des marges et du maintien d'un WACC raisonnable; elle n'est pas seulement tirée par une hypothèse agressive de croissance long terme.
+**Message à retenir:** la recommandation Acheter dépend surtout de la normalisation des marges et du maintien d'un WACC raisonnable; dans cette lecture, la croissance du CA reste fixée au scénario `Forecast` et n'entre plus dans le tornado.
 
 ---
 
@@ -656,22 +654,22 @@ Le graphique ci-dessous classe les hypothèses selon leur impact sur la valeur D
 |---|---:|---:|---:|
 | Cours actuel | EUR 32.2 | EUR 32.2 | EUR 32.2 |
 | Comparables | EUR 23.5 | EUR 36.1 | EUR 44.1 |
-| DCF | EUR 35.2 | EUR 44.5 | EUR 60.7 |
-| Objectif | EUR 40.3 | EUR 40.3 | EUR 40.3 |
+| DCF | EUR 32.5 | EUR 44.3 | EUR 57.8 |
+| Objectif | EUR 40.2 | EUR 40.2 | EUR 40.2 |
 
 ## Indicateurs clés
 
 | Indicateur | Valeur |
 |---|---:|
-| Objectif central | EUR 40.3 |
-| Potentiel cours | 24.9% |
+| Objectif central | EUR 40.2 |
+| Potentiel cours | 24.7% |
 | Rendement dividende | 4.3% |
-| Rendement total | 29.2% |
+| Rendement total | 29.0% |
 
 ## Recommandation
 
 - Acheter: le rendement total attendu dépasse nettement le coût des fonds propres, avec un bilan solide et un FCF élevé.
-- Le potentiel de cours de **24.9%** et le rendement dividende de **4.3%** donnent un rendement total estimé de **29.2%**, ce qui est suffisant pour justifier une recommandation positive.
+- Le potentiel de cours de **24.7%** et le rendement dividende de **4.3%** donnent un rendement total estimé de **29.0%**, ce qui est suffisant pour justifier une recommandation positive.
 - La thèse repose principalement sur trois éléments: valorisation DCF au-dessus du cours actuel, génération de FCF élevée et possibilité d'accélération par les rachats d'actions.
 - Les comparables montrent que Michelin n'est pas cher versus pairs, mais ils ne justifient qu'un upside relatif limité autour d'une valeur proche de EUR 36/action.
 - Le cœur de la recommandation ne vient donc pas d'une forte décote relative contre les pairs, mais d'une sous-valorisation **intrinsèque**: DCF supérieur au cours actuel, normalisation des marges et forte génération de trésorerie dans un secteur aux multiples comprimés.
@@ -698,8 +696,8 @@ Le graphique ci-dessous classe les hypothèses selon leur impact sur la valeur D
 | Réduction du nombre d'actions | 62.0m / 684.7m | 9.1% |
 | Actions pro forma | 684.7m - 62.0m | 622.7m |
 | Accrétion BPA si résultat net constant | 684.7m / 622.7m - 1 | +10.0% |
-| DCF/action pro forma après trésorerie utilisée | (EqV DCF - EUR 2.0 Md) / 622.7m | EUR 45.7 |
-| Accrétion DCF/action | EUR 45.7 / EUR 44.5 - 1 | +2.7% |
+| DCF/action pro forma après trésorerie utilisée | (EqV DCF - EUR 2.0 Md) / 622.7m | EUR 45.5 |
+| Accrétion DCF/action | EUR 45.5 / EUR 44.3 - 1 | +2.7% |
 
 ### Méthode
 
@@ -714,7 +712,7 @@ Le graphique ci-dessous classe les hypothèses selon leur impact sur la valeur D
 - L'effet BPA est fort optiquement: environ **+10.0%** si le résultat net reste constant.
 - L'effet DCF/action est plus prudent: environ **+2.7%**, car on tient compte de la trésorerie dépensée pour racheter les titres.
 - Le rachat crée de la valeur seulement si Michelin rachète ses actions sous la valeur intrinsèque.
-- Ici, la logique est la suivante: Michelin paie environ **EUR 32.24** pour retirer une action que notre DCF valorise à **EUR 44.5**. Autrement dit, l'entreprise dépense **moins** que la valeur économique de l'action retirée.
+- Ici, la logique est la suivante: Michelin paie environ **EUR 32.24** pour retirer une action que notre DCF valorise à **EUR 44.3**. Autrement dit, l'entreprise dépense **moins** que la valeur économique de l'action retirée.
 - La société perd bien EUR 2.0 Md de trésorerie, mais les actionnaires restants se partagent ensuite l'entreprise sur un nombre d'actions plus faible; comme le prix de rachat est inférieur à la valeur intrinsèque, la valeur par action restante augmente.
 - Si Michelin rachetait ses actions exactement à leur valeur intrinsèque, l'effet serait globalement neutre; au-dessus de la valeur intrinsèque, le rachat détruirait de la valeur.
 - Mais il ne faut pas baser toute la recommandation dessus: la création de valeur durable dépend surtout de la marge EBIT, du ROCE au-dessus du WACC et du FCF récurrent.

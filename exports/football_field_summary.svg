@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1050" height="620" viewBox="0 0 1050 620">
   <rect width="1050" height="620" fill="#ffffff"/>
   <text x="70" y="38" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#1F4E5F">Football field summary</text>
-  <text x="70" y="60" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6B7280">Valuation ranges by method, EUR/share.</text>
+  <text x="70" y="60" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6B7280">Valuation ranges by method, EUR/share. DCF range now reflects Bear / Base / Bull scenarios.</text>
   <line x1="230.0" y1="95" x2="230.0" y2="430" stroke="#E6EBEF"/>
   <text x="222.0" y="455" font-family="Arial" font-size="11" fill="#6B7280">20</text>
   <line x1="376.7" y1="95" x2="376.7" y2="430" stroke="#E6EBEF"/>
@@ -20,14 +20,14 @@
   <rect x="281.3" y="195" width="302.1" height="20" fill="#2A9D8F" opacity="0.85"/>
   <circle cx="466.1" cy="205" r="7" fill="#20252B"/>
   <text x="593.5" y="210" font-family="Arial" font-size="11" fill="#6B7280">23.5 - 44.1</text>
-  <text x="85" y="289" font-family="Arial" font-size="13" font-weight="700" fill="#20252B">DCF sensitivity</text>
-  <rect x="452.9" y="273" width="374.0" height="20" fill="#1F4E5F" opacity="0.85"/>
-  <circle cx="589.3" cy="283" r="7" fill="#20252B"/>
-  <text x="836.9" y="288" font-family="Arial" font-size="11" fill="#6B7280">35.2 - 60.7</text>
+  <text x="85" y="289" font-family="Arial" font-size="13" font-weight="700" fill="#20252B">DCF scenarios</text>
+  <rect x="414.0" y="273" width="370.8" height="20" fill="#1F4E5F" opacity="0.85"/>
+  <circle cx="586.3" cy="283" r="7" fill="#20252B"/>
+  <text x="794.8" y="288" font-family="Arial" font-size="11" fill="#6B7280">32.5 - 57.8</text>
   <text x="85" y="367" font-family="Arial" font-size="13" font-weight="700" fill="#20252B">Objectif retenu</text>
-  <rect x="527.7" y="351" width="3.0" height="20" fill="#D1495B" opacity="0.85"/>
-  <circle cx="527.7" cy="361" r="7" fill="#20252B"/>
-  <text x="537.7" y="366" font-family="Arial" font-size="11" fill="#6B7280">40.3 - 40.3</text>
-  <text x="90" y="515" font-family="Arial" font-size="13" fill="#20252B">Readout: the target price sits between peer valuation and DCF, while the DCF range shows asymmetric upside if margins normalize.</text>
-  <text x="70" y="590" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6B7280">Source: project valuation model.</text>
+  <rect x="526.2" y="351" width="3.0" height="20" fill="#D1495B" opacity="0.85"/>
+  <circle cx="526.2" cy="361" r="7" fill="#20252B"/>
+  <text x="536.2" y="366" font-family="Arial" font-size="11" fill="#6B7280">40.2 - 40.2</text>
+  <text x="90" y="515" font-family="Arial" font-size="13" fill="#20252B">Readout: the target price sits between peer valuation and DCF, while the DCF range now reflects explicit Bear / Base / Bull scenarios rather than only WACC/g sensitivity.</text>
+  <text x="70" y="590" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6B7280">Source: Michelin valuation model workbook; comparables summary table.</text>
 </svg>
