@@ -1129,9 +1129,10 @@ def write_excel(calcs: dict):
         ws.cell(i, 6).number_format = '0.0%'
     ws["H4"] = "Lecture"
     header_cell(ws["H4"])
-    ws["H5"] = "Le buyback detruit d'abord de l'equity value du montant depense."
-    ws["H6"] = "Il cree de la valeur par action seulement si le prix de rachat est inferieur a la valeur intrinseque."
-    ws["H7"] = "Le tableau montre l'accretion theoriquement impliquee pour plusieurs tailles de programme."
+    ws["H5"] = "Le rachat retire d'abord de l'equity value du montant depense."
+    ws["H6"] = "Il cree de la valeur par action si Michelin paie moins que la valeur intrinseque de l'action retiree."
+    ws["H7"] = "Ici, le DCF central est au-dessus du prix de rachat: Michelin retire donc plus de valeur economique qu'il ne depense en cash."
+    ws["H8"] = "A la valeur intrinseque, l'effet est neutre; au-dessus, il devient destructeur."
     chart = LineChart()
     chart.title = "Valeur par action apres rachat"
     chart.y_axis.title = "EUR/action"

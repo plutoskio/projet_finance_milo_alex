@@ -599,24 +599,24 @@ La construction du WACC doit rester lisible comme une suite d'hypothèses: coût
 
 ## Scénario DCF
 
-Le graphique ci-dessous compare les trois scénarios DCF en valeur par action pour rendre l'écart baissier / central / haussier immédiatement lisible.
+Le graphique ci-dessous compare les trois scénarios DCF en valeur par action pour rendre l'écart baissier / central / haussier immédiatement lisible. Dans la nouvelle logique du modèle, la croissance du chiffre d'affaires 2026E-2030E reste celle de `Forecast` dans tous les cas; seuls la marge EBIT terminale 2030, le WACC et la croissance terminale varient.
 
 ![Graphique des scénarios DCF en valeur par action](exports/scenario_dcf_values.svg)
 
-| Scénario | Hypothèse marché | Croissance CA 2026-2030 | Marge EBIT 2030 | WACC | Croissance terminale | Valeur / action | Potentiel vs cours |
-|---|---|---:|---:|---:|---:|---:|---:|
-| Baissier | OE durablement faible, pression des pneus d'entrée de gamme, mix moins favorable | 0.0% -> 1.5% | 10.5% | 9.3% | 1.0% | EUR 32.0 | -0.8% |
-| Central | Reprise graduelle, mix premium positif, pas d'accélération macro agressive | 1.5% -> 2.5% | 12.0% | 8.8% | 1.5% | EUR 44.5 | +38.0% |
-| Haussier | Reprise volumes + premiumisation + spécialités et pneus pour véhicules électriques plus forts | 2.5% -> 3.0% | 13.0% | 8.3% | 2.0% | EUR 57.7 | +79.0% |
+| Scénario | Hypothèse marché | Marge EBIT 2030 | WACC | Croissance terminale | Valeur / action | Potentiel vs cours |
+|---|---|---:|---:|---:|---:|---:|
+| Baissier | Pression persistante sur le mix et lecture plus prudente du risque | 10.5% | 9.3% | 1.0% | EUR 34.6 | +7.4% |
+| Central | Reprise graduelle cohérente avec le scénario de base du modèle | 12.0% | 8.8% | 1.5% | EUR 44.3 | +37.5% |
+| Haussier | Exécution plus forte sur le mix premium et hypothèses de marché plus favorables | 13.0% | 8.3% | 2.0% | EUR 55.2 | +71.1% |
 
 ## Lecture du scénario DCF
 
-- Le **scénario baissier** donne une valeur proche du cours actuel: cela montre que le marché intègre déjà une partie des risques de volume, de devises et de pression prix.
-- Le **scénario central** reste nettement au-dessus du cours actuel, surtout grâce à la normalisation des volumes et à une marge EBIT qui remonte progressivement vers 12.0%.
-- Le **scénario haussier** montre l'effet d'un meilleur mix premium, d'une croissance plus forte des spécialités et d'une adoption plus favorable des pneus pour SUV / véhicules électriques.
-- Ce scénario DCF rend la recommandation plus défendable: même sans scénario haussier, le scénario central offre une marge de sécurité significative.
+- La **croissance du CA** n'est plus stressée dans cette table: elle reste identique à `Forecast`, car elle est traitée comme une hypothèse de court / moyen terme déjà posée dans le modèle.
+- Le **scénario baissier** ne dégrade donc que la marge terminale, le WACC et la croissance terminale. Il donne encore une valeur légèrement au-dessus du cours, à `EUR 34.6/action`.
+- Le **scénario central** correspond à la lecture de base du modèle: marge terminale à `12.0%`, WACC de base et croissance terminale de `1.5%`, pour `EUR 44.3/action`.
+- Le **scénario haussier** combine une marge terminale plus élevée, un WACC plus faible et une croissance terminale plus généreuse, ce qui porte la valeur à `EUR 55.2/action`.
 
-**Source:** modèle Excel DCF; hypothèses internes construites à partir des tendances Michelin 2025.
+**Source:** feuille `Sensitivity` du classeur Excel; croissance du CA reprise de `Forecast`; scénarios appliqués à la marge terminale 2030, au WACC et à la croissance terminale.
 
 ## Sensibilité tornado
 
@@ -714,7 +714,9 @@ Le graphique ci-dessous classe les hypothèses selon leur impact sur la valeur D
 - L'effet BPA est fort optiquement: environ **+10.0%** si le résultat net reste constant.
 - L'effet DCF/action est plus prudent: environ **+2.7%**, car on tient compte de la trésorerie dépensée pour racheter les titres.
 - Le rachat crée de la valeur seulement si Michelin rachète ses actions sous la valeur intrinsèque.
-- Comme notre DCF central donne EUR 44.5/action contre un cours de référence de EUR 32.24, le rachat est cohérent avec la thèse Acheter.
+- Ici, la logique est la suivante: Michelin paie environ **EUR 32.24** pour retirer une action que notre DCF valorise à **EUR 44.5**. Autrement dit, l'entreprise dépense **moins** que la valeur économique de l'action retirée.
+- La société perd bien EUR 2.0 Md de trésorerie, mais les actionnaires restants se partagent ensuite l'entreprise sur un nombre d'actions plus faible; comme le prix de rachat est inférieur à la valeur intrinsèque, la valeur par action restante augmente.
+- Si Michelin rachetait ses actions exactement à leur valeur intrinsèque, l'effet serait globalement neutre; au-dessus de la valeur intrinsèque, le rachat détruirait de la valeur.
 - Mais il ne faut pas baser toute la recommandation dessus: la création de valeur durable dépend surtout de la marge EBIT, du ROCE au-dessus du WACC et du FCF récurrent.
 
 **Message à retenir:** le rachat d'actions est un accélérateur de valeur par action, pas le moteur principal; il renforce la thèse si Michelin continue à générer du FCF et si le titre reste sous sa valeur intrinsèque.
