@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="620" viewBox="0 0 1050 620">
+  <rect width="1050" height="620" fill="#ffffff"/>
+  <text x="70" y="38" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#1F4E5F">2025 tire market volumes by segment</text>
+  <text x="70" y="60" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6B7280">Global volume in millions of tires. Replacement is structurally larger and more resilient than OE.</text>
+  <rect x="120.0" y="155" width="530.6" height="64" fill="#2A9D8F"/>
+  <text x="385.3" y="193" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#ffffff">1,256</text>
+  <rect x="650.6" y="155" width="176.9" height="64" fill="#1F4E5F"/>
+  <text x="739.1" y="193" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#ffffff">419</text>
+  <rect x="827.5" y="155" width="72.5" height="64" fill="#F4A261"/>
+  <text x="863.8" y="193" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#ffffff">172</text>
+  <rect x="900.1" y="155" width="19.9" height="64" fill="#D1495B"/>
+  <rect x="120" y="155" width="800" height="64" fill="none" stroke="#20252B" stroke-width="1"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#20252B">
+    <rect x="120" y="266" width="16" height="16" fill="#2A9D8F"/>
+    <text x="146" y="280">PLT remplacement: 1,255.6m tires (66.3%)</text>
+    <rect x="120" y="311" width="16" height="16" fill="#1F4E5F"/>
+    <text x="146" y="325">PLT OE: 418.7m tires (22.1%)</text>
+    <rect x="120" y="356" width="16" height="16" fill="#F4A261"/>
+    <text x="146" y="370">Truck remplacement: 171.6m tires (9.1%)</text>
+    <rect x="120" y="401" width="16" height="16" fill="#D1495B"/>
+    <text x="146" y="415">Truck OE: 47.2m tires (2.5%)</text>
+  </g>
+  <text x="120" y="505" font-family="Arial" font-size="15" font-weight="700" fill="#1F4E5F">Key read-across</text>
+  <text x="120" y="532" font-family="Arial" font-size="13" fill="#20252B">The replacement market is much larger than OE: this supports Michelin's resilience because tire replacement depends on the installed vehicle base, not only new vehicle production.</text>
+  <text x="70" y="590" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6B7280">Source: Michelin key figures 2020-2025, Markets tab.</text>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="620" viewBox="0 0 1050 620">
+  <rect width="1050" height="620" fill="#ffffff"/>
+  <text x="70" y="38" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#1F4E5F">P&amp;L 2025: du CA a l'EBIT SECTOR MICHELIN</text>
+  <text x="70" y="60" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6B7280">Waterfall en % du CA: les couts par nature expliquent la marge EBIT SECTOR MICHELIN de 10.5%.</text>
+  <line x1="85" y1="455" x2="970" y2="455" stroke="#20252B" stroke-width="1.2"/>
+  <line x1="85" y1="95" x2="85" y2="455" stroke="#20252B" stroke-width="1.2"/>
+  <line x1="85" y1="455.0" x2="970" y2="455.0" stroke="#20252B" stroke-width="1"/>
+  <text x="75" y="459.0" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">0%</text>
+  <line x1="85" y1="369.3" x2="970" y2="369.3" stroke="#D9DEE3" stroke-width="1" stroke-dasharray="4 4"/>
+  <text x="75" y="373.3" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">25%</text>
+  <line x1="85" y1="283.6" x2="970" y2="283.6" stroke="#D9DEE3" stroke-width="1" stroke-dasharray="4 4"/>
+  <text x="75" y="287.6" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">50%</text>
+  <line x1="85" y1="197.9" x2="970" y2="197.9" stroke="#D9DEE3" stroke-width="1" stroke-dasharray="4 4"/>
+  <text x="75" y="201.9" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">75%</text>
+  <line x1="85" y1="112.1" x2="970" y2="112.1" stroke="#20252B" stroke-width="1"/>
+  <text x="75" y="116.1" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">100%</text>
+  <text x="50" y="90" text-anchor="middle" font-family="Arial" font-size="11" fill="#6B7280" transform="rotate(-90 50 90)">% du CA</text>
+  <rect x="100.0" y="112.1" width="70" height="342.9" fill="#1F4E5F"/>
+  <text x="135" y="104.1" text-anchor="middle" font-family="Arial" font-size="12" font-weight="700" fill="#1F4E5F">100.0%</text>
+  <text x="135" y="482" text-anchor="middle" font-family="Arial" font-size="11" fill="#20252B">CA 2025</text>
+  <text x="135" y="498" text-anchor="middle" font-family="Arial" font-size="10" fill="#6B7280">EUR 26.0 Md</text>
+  <line x1="170.0" y1="112.1" x2="240.0" y2="112.1" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="240.0" y="112.1" width="70" height="68.1" fill="#D1495B"/>
+  <text x="275" y="194.2" text-anchor="middle" font-family="Arial" font-size="11" font-weight="700" fill="#D1495B">-19.9 pts</text>
+  <text x="275" y="482" text-anchor="middle" font-family="Arial" font-size="11" fill="#20252B">Matieres premieres</text>
+  <text x="275" y="498" text-anchor="middle" font-family="Arial" font-size="10" fill="#6B7280">EUR -5.2 Md</text>
+  <line x1="310.0" y1="180.2" x2="380.0" y2="180.2" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="380.0" y="180.2" width="70" height="98.8" fill="#D1495B"/>
+  <text x="415" y="293.0" text-anchor="middle" font-family="Arial" font-size="11" font-weight="700" fill="#D1495B">-28.8 pts</text>
+  <text x="415" y="482" text-anchor="middle" font-family="Arial" font-size="11" fill="#20252B">Personnel</text>
+  <text x="415" y="498" text-anchor="middle" font-family="Arial" font-size="10" fill="#6B7280">EUR -7.5 Md</text>
+  <line x1="450.0" y1="279.0" x2="520.0" y2="279.0" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="520.0" y="279.0" width="70" height="16.5" fill="#D1495B"/>
+  <text x="555" y="309.6" text-anchor="middle" font-family="Arial" font-size="11" font-weight="700" fill="#D1495B">-4.8 pts</text>
+  <text x="555" y="482" text-anchor="middle" font-family="Arial" font-size="11" fill="#20252B">Transport</text>
+  <text x="555" y="498" text-anchor="middle" font-family="Arial" font-size="10" fill="#6B7280">EUR -1.3 Md</text>
+  <line x1="590.0" y1="295.6" x2="660.0" y2="295.6" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="660.0" y="295.6" width="70" height="26.9" fill="#D1495B"/>
+  <text x="695" y="336.4" text-anchor="middle" font-family="Arial" font-size="11" font-weight="700" fill="#D1495B">-7.8 pts</text>
+  <text x="695" y="482" text-anchor="middle" font-family="Arial" font-size="11" fill="#20252B">D&amp;A</text>
+  <text x="695" y="498" text-anchor="middle" font-family="Arial" font-size="10" fill="#6B7280">EUR -2.0 Md</text>
+  <line x1="730.0" y1="322.4" x2="800.0" y2="322.4" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="800.0" y="322.4" width="70" height="96.7" fill="#D1495B"/>
+  <text x="835" y="433.1" text-anchor="middle" font-family="Arial" font-size="11" font-weight="700" fill="#D1495B">-28.2 pts</text>
+  <text x="835" y="482" text-anchor="middle" font-family="Arial" font-size="11" fill="#20252B">Autres couts</text>
+  <text x="835" y="498" text-anchor="middle" font-family="Arial" font-size="10" fill="#6B7280">EUR -7.3 Md</text>
+  <line x1="870.0" y1="419.1" x2="910.0" y2="419.1" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="910.0" y="419.1" width="70" height="35.9" fill="#2A9D8F"/>
+  <text x="945" y="411.1" text-anchor="middle" font-family="Arial" font-size="12" font-weight="700" fill="#2A9D8F">10.5%</text>
+  <text x="945" y="478" text-anchor="middle" font-family="Arial" font-size="10" fill="#20252B">EBIT SECTOR</text>
+  <text x="945" y="492" text-anchor="middle" font-family="Arial" font-size="10" fill="#20252B">MICHELIN</text>
+  <text x="945" y="508" text-anchor="middle" font-family="Arial" font-size="10" fill="#6B7280">EUR 2.7 Md</text>
+  <text x="110" y="540" font-family="Arial" font-size="13" fill="#20252B">Lecture: le personnel et les autres couts sont les plus gros postes; avec la sous-utilisation industrielle, ces couts fixes pesent fortement sur la marge 2025.</text>
+  <text x="70" y="590" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6B7280">Source: Michelin key figures 2020-2025, onglet Earnings. D&amp;A = depreciation, amortization, impairment charges. Autres couts incluent energie, services, communication, etc.</text>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="620" viewBox="0 0 1050 620">
+  <rect width="1050" height="620" fill="#ffffff"/>
+  <text x="70" y="38" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#1F4E5F">Competitive positioning map</text>
+  <text x="70" y="60" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6B7280">Qualitative map: premium positioning vs technical/specialty exposure. Michelin is differentiated by brand, R&amp;D and specialties.</text>
+  <rect x="120" y="100" width="760" height="400" fill="#F6F8FA" stroke="#20252B"/>
+  <line x1="500.0" y1="100" x2="500.0" y2="500" stroke="#E6EBEF" stroke-width="2"/>
+  <line x1="120" y1="300.0" x2="880" y2="300.0" stroke="#E6EBEF" stroke-width="2"/>
+  <text x="135" y="125" font-family="Arial" font-size="12" fill="#6B7280">More technical / specialties</text>
+  <text x="670" y="485" font-family="Arial" font-size="12" fill="#6B7280">More premium positioning</text>
+  <text x="135" y="485" font-family="Arial" font-size="12" fill="#6B7280">More commodity / value</text>
+  <text x="670" y="125" font-family="Arial" font-size="12" fill="#6B7280">Premium + specialty moat</text>
+  <circle cx="743.2" cy="172.0" r="10" fill="#D1495B" stroke="#20252B" stroke-width="1"/>
+  <text x="757.2" y="176.0" font-family="Arial" font-size="12" font-weight="700" fill="#D1495B">Michelin</text>
+  <circle cx="667.2" cy="228.0" r="10" fill="#2A9D8F" stroke="#20252B" stroke-width="1"/>
+  <text x="681.2" y="232.0" font-family="Arial" font-size="12" font-weight="400" fill="#20252B">Bridgestone</text>
+  <circle cx="773.6" cy="320.0" r="10" fill="#2A9D8F" stroke="#20252B" stroke-width="1"/>
+  <text x="787.6" y="324.0" font-family="Arial" font-size="12" font-weight="400" fill="#20252B">Pirelli</text>
+  <circle cx="560.8" cy="252.0" r="10" fill="#2A9D8F" stroke="#20252B" stroke-width="1"/>
+  <text x="574.8" y="256.0" font-family="Arial" font-size="12" font-weight="400" fill="#20252B">Continental</text>
+  <circle cx="484.8" cy="328.0" r="10" fill="#2A9D8F" stroke="#20252B" stroke-width="1"/>
+  <text x="498.8" y="332.0" font-family="Arial" font-size="12" font-weight="400" fill="#20252B">Yokohama</text>
+  <circle cx="439.2" cy="348.0" r="10" fill="#2A9D8F" stroke="#20252B" stroke-width="1"/>
+  <text x="453.2" y="352.0" font-family="Arial" font-size="12" font-weight="400" fill="#20252B">Hankook</text>
+  <circle cx="386.0" cy="380.0" r="10" fill="#6B7280" stroke="#20252B" stroke-width="1"/>
+  <text x="400.0" y="384.0" font-family="Arial" font-size="12" font-weight="400" fill="#20252B">Goodyear</text>
+  <text x="120" y="552" font-family="Arial" font-size="13" fill="#20252B">Use this as a visual explanation of Michelin's moat: premium brand, R&D, homologations, distribution and specialty tire expertise.</text>
+  <text x="70" y="590" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6B7280">Source: qualitative positioning based on company disclosures and peer descriptions.</text>
+</svg>

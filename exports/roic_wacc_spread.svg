@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="620" viewBox="0 0 1050 620">
+  <rect width="1050" height="620" fill="#ffffff"/>
+  <text x="80" y="38" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#1F4E5F">ROCE / ROIC proxy vs WACC</text>
+  <text x="80" y="60" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6B7280">Michelin's official ROCE is used as a practical ROIC proxy and compared with the project WACC.</text>
+
+  <line x1="110" y1="455" x2="920" y2="455" stroke="#20252B" stroke-width="1.2"/>
+  <line x1="110" y1="100" x2="110" y2="455" stroke="#20252B" stroke-width="1.2"/>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#6B7280">
+    <line x1="110" y1="404.3" x2="920" y2="404.3" stroke="#E6EBEF"/>
+    <text x="72" y="408">8%</text>
+    <line x1="110" y1="325.4" x2="920" y2="325.4" stroke="#E6EBEF"/>
+    <text x="66" y="329">10%</text>
+    <line x1="110" y1="246.6" x2="920" y2="246.6" stroke="#E6EBEF"/>
+    <text x="66" y="251">12%</text>
+    <line x1="110" y1="167.7" x2="920" y2="167.7" stroke="#E6EBEF"/>
+    <text x="66" y="172">14%</text>
+    <text x="55" y="100">%</text>
+  </g>
+
+  <!-- WACC 8.8% -->
+  <line x1="110" y1="373" x2="920" y2="373" stroke="#D1495B" stroke-width="3" stroke-dasharray="7 5"/>
+  <text x="930" y="377" font-family="Arial" font-size="12" font-weight="700" fill="#D1495B">WACC 8.8%</text>
+
+  <!-- ROCE line points: y scale 6.7%-15.7%; x positions 180,335,490,645,800 -->
+  <polyline points="180,313 335,306 490,274 645,306 800,357" fill="none" stroke="#1F4E5F" stroke-width="4"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#20252B">
+    <circle cx="180" cy="313" r="6" fill="#1F4E5F"/><text x="162" y="485">2021</text><text x="162" y="300">10.3%</text>
+    <circle cx="335" cy="306" r="6" fill="#1F4E5F"/><text x="317" y="485">2022</text><text x="317" y="293">10.5%</text>
+    <circle cx="490" cy="274" r="6" fill="#1F4E5F"/><text x="472" y="485">2023</text><text x="472" y="261">11.4%</text>
+    <circle cx="645" cy="306" r="6" fill="#1F4E5F"/><text x="627" y="485">2024</text><text x="627" y="293">10.5%</text>
+    <circle cx="800" cy="357" r="6" fill="#1F4E5F"/><text x="782" y="485">2025</text><text x="782" y="344">9.2%</text>
+  </g>
+
+  <rect x="90" y="520" width="18" height="18" fill="#1F4E5F"/>
+  <text x="118" y="534" font-family="Arial" font-size="12" fill="#20252B">ROCE / ROIC proxy</text>
+  <line x1="270" y1="529" x2="315" y2="529" stroke="#D1495B" stroke-width="3" stroke-dasharray="7 5"/>
+  <text x="325" y="534" font-family="Arial" font-size="12" fill="#20252B">Project WACC</text>
+
+  <text x="80" y="575" font-family="Arial" font-size="10" fill="#6B7280">Source: Michelin key figures 2020-2025; project WACC model. ROCE is an operating return metric and is used here as an ROIC proxy.</text>
+</svg>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="640" viewBox="0 0 1120 640">
+  <rect width="1120" height="640" fill="#ffffff"/>
+  <text x="70" y="38" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#1F4E5F">Projection du CA, du resultat net et de la marge nette</text>
+  <text x="70" y="60" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6B7280">2026E ancre sur le consensus Michelin; 2027E-2030E derives du scenario central prudent.</text>
+  <line x1="120" y1="450.0" x2="940" y2="450.0" stroke="#E6EBEF" stroke-width="1"/>
+  <text x="108" y="454.0" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">0</text>
+  <line x1="120" y1="368.8" x2="940" y2="368.8" stroke="#E6EBEF" stroke-width="1"/>
+  <text x="108" y="372.8" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">8</text>
+  <line x1="120" y1="287.5" x2="940" y2="287.5" stroke="#E6EBEF" stroke-width="1"/>
+  <text x="108" y="291.5" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">16</text>
+  <line x1="120" y1="206.2" x2="940" y2="206.2" stroke="#E6EBEF" stroke-width="1"/>
+  <text x="108" y="210.2" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">24</text>
+  <line x1="120" y1="125.0" x2="940" y2="125.0" stroke="#E6EBEF" stroke-width="1"/>
+  <text x="108" y="129.0" text-anchor="end" font-family="Arial" font-size="11" fill="#6B7280">32</text>
+  <text x="952" y="437.8" font-family="Arial" font-size="11" fill="#6B7280">1.5</text>
+  <text x="952" y="356.5" font-family="Arial" font-size="11" fill="#6B7280">2.0</text>
+  <text x="952" y="275.2" font-family="Arial" font-size="11" fill="#6B7280">2.5</text>
+  <text x="952" y="194.0" font-family="Arial" font-size="11" fill="#6B7280">3.0</text>
+  <text x="952" y="112.8" font-family="Arial" font-size="11" fill="#6B7280">3.5</text>
+  <line x1="120" y1="450" x2="940" y2="450" stroke="#20252B" stroke-width="1.5"/>
+  <line x1="120" y1="125" x2="120" y2="450" stroke="#20252B" stroke-width="1.5"/>
+  <line x1="940" y1="125" x2="940" y2="450" stroke="#20252B" stroke-width="1.5"/>
+  <text x="120" y="107" font-family="Arial" font-size="12" font-weight="700" fill="#20252B">CA (EUR Md)</text>
+  <text x="935" y="107" text-anchor="end" font-family="Arial" font-size="12" font-weight="700" fill="#20252B">Resultat net (EUR Md)</text>
+  <rect x="151.3" y="186.0" width="74" height="264.0" fill="#6B7280" opacity="0.96"/>
+  <text x="188.3" y="474" text-anchor="middle" font-family="Arial" font-size="11">2025A</text>
+  <text x="188.3" y="178.0" text-anchor="middle" font-family="Arial" font-size="10" fill="#20252B">26.0</text>
+  <rect x="288.0" y="180.5" width="74" height="269.5" fill="#1F4E5F" opacity="0.96"/>
+  <text x="325.0" y="474" text-anchor="middle" font-family="Arial" font-size="11">2026E</text>
+  <text x="325.0" y="172.5" text-anchor="middle" font-family="Arial" font-size="10" fill="#20252B">26.5</text>
+  <rect x="424.7" y="173.8" width="74" height="276.2" fill="#1F4E5F" opacity="0.96"/>
+  <text x="461.7" y="474" text-anchor="middle" font-family="Arial" font-size="11">2027E</text>
+  <text x="461.7" y="165.8" text-anchor="middle" font-family="Arial" font-size="10" fill="#20252B">27.2</text>
+  <rect x="561.3" y="165.5" width="74" height="284.5" fill="#1F4E5F" opacity="0.96"/>
+  <text x="598.3" y="474" text-anchor="middle" font-family="Arial" font-size="11">2028E</text>
+  <text x="598.3" y="157.5" text-anchor="middle" font-family="Arial" font-size="10" fill="#20252B">28.0</text>
+  <rect x="698.0" y="157.0" width="74" height="293.0" fill="#1F4E5F" opacity="0.96"/>
+  <text x="735.0" y="474" text-anchor="middle" font-family="Arial" font-size="11">2029E</text>
+  <text x="735.0" y="149.0" text-anchor="middle" font-family="Arial" font-size="10" fill="#20252B">28.9</text>
+  <rect x="834.7" y="149.6" width="74" height="300.4" fill="#1F4E5F" opacity="0.96"/>
+  <text x="871.7" y="474" text-anchor="middle" font-family="Arial" font-size="11">2030E</text>
+  <text x="871.7" y="141.6" text-anchor="middle" font-family="Arial" font-size="10" fill="#20252B">29.6</text>
+  <line x1="256.7" y1="120" x2="256.7" y2="456" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="188.3" y1="407.1" x2="325.0" y2="374.3" stroke="#F4A261" stroke-width="3"/>
+  <line x1="325.0" y1="374.3" x2="461.7" y2="362.2" stroke="#F4A261" stroke-width="3"/>
+  <line x1="461.7" y1="362.2" x2="598.3" y2="347.1" stroke="#F4A261" stroke-width="3"/>
+  <line x1="598.3" y1="347.1" x2="735.0" y2="331.4" stroke="#F4A261" stroke-width="3"/>
+  <line x1="735.0" y1="331.4" x2="871.7" y2="316.6" stroke="#F4A261" stroke-width="3"/>
+  <circle cx="188.3" cy="407.1" r="5.5" fill="#F4A261" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="196.3" y="399.1" font-family="Arial" font-size="10" fill="#F4A261">1.7</text>
+  <text x="198.3" y="425.1" font-family="Arial" font-size="10" fill="#2A9D8F">6.4%</text>
+  <circle cx="325.0" cy="374.3" r="5.5" fill="#F4A261" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="333.0" y="366.3" font-family="Arial" font-size="10" fill="#F4A261">1.9</text>
+  <text x="335.0" y="396.3" font-family="Arial" font-size="10" fill="#2A9D8F">7.0%</text>
+  <circle cx="461.7" cy="362.2" r="5.5" fill="#F4A261" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="469.7" y="354.2" font-family="Arial" font-size="10" fill="#F4A261">1.9</text>
+  <text x="471.7" y="380.2" font-family="Arial" font-size="10" fill="#2A9D8F">7.1%</text>
+  <circle cx="598.3" cy="347.1" r="5.5" fill="#F4A261" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="606.3" y="339.1" font-family="Arial" font-size="10" fill="#F4A261">2.0</text>
+  <text x="608.3" y="369.1" font-family="Arial" font-size="10" fill="#2A9D8F">7.3%</text>
+  <circle cx="735.0" cy="331.4" r="5.5" fill="#F4A261" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="743.0" y="323.4" font-family="Arial" font-size="10" fill="#F4A261">2.1</text>
+  <text x="745.0" y="349.4" font-family="Arial" font-size="10" fill="#2A9D8F">7.4%</text>
+  <circle cx="871.7" cy="316.6" r="5.5" fill="#F4A261" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="879.7" y="308.6" font-family="Arial" font-size="10" fill="#F4A261">2.2</text>
+  <text x="883.7" y="338.6" font-family="Arial" font-size="10" fill="#2A9D8F">7.5%</text>
+  <rect x="220" y="498" width="14" height="14" fill="#6B7280"/>
+  <text x="242" y="510" font-family="Arial" font-size="11" fill="#20252B">2025A publie</text>
+  <rect x="355" y="498" width="14" height="14" fill="#1F4E5F"/>
+  <text x="377" y="510" font-family="Arial" font-size="11" fill="#20252B">CA 2026E-2030E</text>
+  <line x1="545" y1="505" x2="565" y2="505" stroke="#F4A261" stroke-width="3"/>
+  <text x="573" y="510" font-family="Arial" font-size="11" fill="#20252B">Resultat net</text>
+  <text x="718" y="510" font-family="Arial" font-size="11" fill="#2A9D8F">Marge nette en label</text>
+  <text x="120" y="545" font-family="Arial" font-size="12" fill="#20252B">Lecture: la hausse du resultat net vient a la fois de la progression du CA et de l'amelioration graduelle de la marge nette.</text>
+  <text x="120" y="564" font-family="Arial" font-size="12" fill="#20252B">2026E reprend le consensus Michelin; 2027E-2030E prolongent ce point d'ancrage dans le scenario central.</text>
+  <text x="70" y="612" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6B7280">Sources: Michelin, resultats annuels 2025; Michelin consensus du 9 mars 2026; scenario central interne pour 2027E-2030E.</text>
+</svg>

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="620" viewBox="0 0 1050 620">
+  <rect width="1050" height="620" fill="#ffffff"/>
+  <text x="90" y="38" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#1F4E5F">Peer multiple regression - EBIT margin vs EV/EBIT</text>
+  <text x="90" y="60" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6B7280">Illustrative regression excludes Goodyear as a distressed outlier. Michelin is shown separately.</text>
+
+  <!-- Plot frame: x 120-900 maps 0%-16%, y 470-90 maps 5x-25x -->
+  <line x1="120" y1="470" x2="900" y2="470" stroke="#20252B" stroke-width="1.2"/>
+  <line x1="120" y1="90" x2="120" y2="470" stroke="#20252B" stroke-width="1.2"/>
+
+  <!-- Grid and axes -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#6B7280">
+    <line x1="120" y1="375" x2="900" y2="375" stroke="#E6EBEF"/>
+    <text x="85" y="379">10x</text>
+    <line x1="120" y1="280" x2="900" y2="280" stroke="#E6EBEF"/>
+    <text x="85" y="284">15x</text>
+    <line x1="120" y1="185" x2="900" y2="185" stroke="#E6EBEF"/>
+    <text x="85" y="189">20x</text>
+    <line x1="120" y1="90" x2="900" y2="90" stroke="#E6EBEF"/>
+    <text x="85" y="94">25x</text>
+
+    <line x1="315" y1="90" x2="315" y2="470" stroke="#E6EBEF"/>
+    <text x="303" y="492">4%</text>
+    <line x1="510" y1="90" x2="510" y2="470" stroke="#E6EBEF"/>
+    <text x="498" y="492">8%</text>
+    <line x1="705" y1="90" x2="705" y2="470" stroke="#E6EBEF"/>
+    <text x="690" y="492">12%</text>
+    <line x1="900" y1="90" x2="900" y2="470" stroke="#E6EBEF"/>
+    <text x="885" y="492">16%</text>
+
+    <text x="440" y="535">EBIT margin</text>
+    <text x="35" y="285" transform="rotate(-90 35 285)">EV/EBIT multiple</text>
+  </g>
+
+  <!-- Regression line excluding Goodyear: y = 12.8738 - 0.3514*x; x from 7.5 to 14.8 -->
+  <line x1="485.6" y1="376.5" x2="841.5" y2="401.0" stroke="#1F4E5F" stroke-width="3"/>
+  <text x="640" y="370" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#1F4E5F">Regression line, ex-Goodyear</text>
+
+  <!-- Dots -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="11">
+    <!-- Goodyear: x=1.97%, y=23.48x -->
+    <circle cx="216.0" cy="118.9" r="7" fill="#9CA3AF"/>
+    <text x="229" y="122" fill="#6B7280">Goodyear outlier</text>
+
+    <!-- Continental: x=7.92%, y=12.18x -->
+    <circle cx="506.1" cy="333.6" r="7" fill="#2A9D8F"/>
+    <text x="519" y="337" fill="#20252B">Continental</text>
+
+    <!-- Hankook: x=8.68%, y=7.07x -->
+    <circle cx="543.2" cy="430.7" r="7" fill="#2A9D8F"/>
+    <text x="556" y="434" fill="#20252B">Hankook</text>
+
+    <!-- Michelin: x=9.72%, y=9.37x -->
+    <circle cx="593.9" cy="387.0" r="9" fill="#D1495B" stroke="#20252B" stroke-width="1"/>
+    <text x="607" y="391" fill="#D1495B" font-weight="700">Michelin</text>
+
+    <!-- Bridgestone: x=10.87%, y=9.33x -->
+    <circle cx="650.0" cy="387.7" r="7" fill="#2A9D8F"/>
+    <text x="663" y="391" fill="#20252B">Bridgestone</text>
+
+    <!-- Yokohama: x=12.67%, y=9.14x -->
+    <circle cx="737.7" cy="391.3" r="7" fill="#2A9D8F"/>
+    <text x="751" y="395" fill="#20252B">Yokohama</text>
+
+    <!-- Pirelli: x=14.38%, y=7.49x -->
+    <circle cx="821.1" cy="422.7" r="7" fill="#2A9D8F"/>
+    <text x="834" y="426" fill="#20252B">Pirelli</text>
+  </g>
+
+  <!-- Michelin predicted -->
+  <line x1="593.9" y1="385.3" x2="593.9" y2="387.0" stroke="#D1495B" stroke-width="2"/>
+  <text x="610" y="415" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#6B7280">Michelin actual 9.37x vs regression-implied 9.46x</text>
+
+  <!-- Legend -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#20252B">
+    <circle cx="90" cy="555" r="7" fill="#2A9D8F"/>
+    <text x="105" y="559">Regression peers</text>
+    <circle cx="230" cy="555" r="7" fill="#D1495B"/>
+    <text x="245" y="559">Michelin</text>
+    <circle cx="330" cy="555" r="7" fill="#9CA3AF"/>
+    <text x="345" y="559">Outlier shown, excluded from regression</text>
+  </g>
+
+  <text x="90" y="590" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6B7280">Source: StockAnalysis statistics pages, April 2026. Simple linear regression on EBIT margin and EV/EBIT; sample size is small and result is illustrative.</text>
+</svg>
