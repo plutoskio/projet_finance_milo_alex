@@ -494,6 +494,64 @@ def write_excel(calcs: dict):
     ws.freeze_panes = "A4"
     style_sheet(ws)
 
+    # Dashboard
+    ws = wb.create_sheet("Dashboard")
+    write_title(ws, "Dashboard Michelin", "Lecture rapide du modele: valorisation, message cle et feuilles a utiliser")
+    ws.append([])
+    ws.append(["Indicateur", "Valeur"])
+    for cell in ws[3]:
+        header_cell(cell)
+    dashboard_rows = [
+        ("Cours actuel", "=WACC!B5"),
+        ("Valeur comparables", "=AVERAGE(Comps!F13:F15)"),
+        ("Valeur DCF", "=DCF!B23"),
+        ("Objectif central", "=Football_Field!C8"),
+        ("Rendement dividende", "=0.0426"),
+        ("Rendement total", "=((B7/B4)-1)+B8"),
+    ]
+    for r, (label, value) in enumerate(dashboard_rows, start=4):
+        ws.cell(r, 1, label)
+        ws.cell(r, 2, value)
+        section_cell(ws.cell(r, 1))
+    for r in [4, 5, 6, 7]:
+        ws.cell(r, 2).number_format = 'EUR 0.0'
+    for r in [8, 9]:
+        ws.cell(r, 2).number_format = "0.0%"
+
+    ws["D4"] = "Comment lire le fichier"
+    header_cell(ws["D4"])
+    guidance = [
+        "1. Modifier les hypotheses de croissance et de marge dans Forecast.",
+        "2. Modifier les inputs de marche et de WACC dans WACC.",
+        "3. Les feuilles DCF, Sensitivity, Tornado et Football_Field se mettent ensuite a jour.",
+        "4. Scenario_DCF et Buyback_Impact servent a tester des lectures alternatives sans casser la base.",
+    ]
+    for i, text in enumerate(guidance, start=5):
+        ws.cell(i, 4, text)
+        ws.cell(i, 4).alignment = Alignment(wrap_text=True, vertical="top")
+
+    ws["G4"] = "Lecture"
+    ws["H4"] = "Valeur"
+    header_cell(ws["G4"])
+    header_cell(ws["H4"])
+    chart_labels = ["Cours actuel", "Comparables", "DCF", "Objectif"]
+    chart_formulas = ["=B4", "=B5", "=B6", "=B7"]
+    for i, (label, formula) in enumerate(zip(chart_labels, chart_formulas), start=5):
+        ws.cell(i, 7, label)
+        ws.cell(i, 8, formula)
+        ws.cell(i, 8).number_format = 'EUR 0.0'
+    chart = BarChart()
+    chart.title = "Synthese de valorisation"
+    chart.y_axis.title = "EUR/action"
+    data = Reference(ws, min_col=8, max_col=8, min_row=4, max_row=8)
+    cats = Reference(ws, min_col=7, max_col=7, min_row=5, max_row=8)
+    chart.add_data(data, titles_from_data=True)
+    chart.set_categories(cats)
+    chart.height = 6
+    chart.width = 8
+    ws.add_chart(chart, "J4")
+    style_sheet(ws)
+
     # Historical
     ws = wb.create_sheet("Historical")
     years = calcs["history"]["years"]
@@ -559,62 +617,62 @@ def write_excel(calcs: dict):
     # Forecast
     ws = wb.create_sheet("Forecast")
     write_title(ws, "Projection 2026E-2030E", "Scenario central: reprise graduelle des volumes, mix premium et discipline cash")
-    forecast_years = [2025] + list(calcs["forecast"].keys())
+    forecast_years = list(calcs["forecast"].keys())
     ws.append([])
-    ws.append(["EURm"] + [f"{y}A" if y == 2025 else f"{y}E" for y in forecast_years])
+    ws.append(["EURm"] + [f"{y}E" for y in forecast_years])
     for cell in ws[3]:
         header_cell(cell)
-    forecast_rows = [
-        ("Chiffre d'affaires", "sales"),
-        ("Croissance CA", "growth"),
-        ("Marge EBITDA", "ebitda_margin"),
-        ("EBITDA", "ebitda"),
-        ("Marge EBIT secteurs", "ebit_margin"),
-        ("EBIT secteurs", "ebit"),
-        ("Taux d'impot", "tax_rate"),
-        ("NOPAT", "nopat"),
-        ("D&A / CA", "da_margin"),
-        ("D&A", "da"),
-        ("Capex / CA", "capex_margin"),
-        ("Capex", "capex"),
-        ("Variation BFR", "delta_nwc"),
-        ("FCFF", "fcff"),
+    forecast_labels = [
+        "Chiffre d'affaires",
+        "Croissance CA",
+        "Marge EBITDA",
+        "EBITDA",
+        "Marge EBIT secteurs",
+        "EBIT secteurs",
+        "Taux d'impot",
+        "NOPAT",
+        "D&A / CA",
+        "D&A",
+        "Capex / CA",
+        "Capex",
+        "Variation BFR",
+        "FCFF",
     ]
-    for r, (label, key) in enumerate(forecast_rows, start=4):
+    for r, label in enumerate(forecast_labels, start=4):
         ws.cell(r, 1, label)
         section_cell(ws.cell(r, 1))
-        for c, year in enumerate(forecast_years, start=2):
-            if year == 2025:
-                value = {
-                    "sales": hist["sales"][2025],
-                    "growth": hist["sales_growth"][2025],
-                    "ebitda_margin": hist["ebitda"][2025] / hist["sales"][2025],
-                    "ebitda": hist["ebitda"][2025],
-                    "ebit_margin": hist["segment_margin"][2025],
-                    "ebit": hist["segment_ebit"][2025],
-                    "tax_rate": hist["tax_rate"][2025],
-                    "nopat": hist["segment_ebit"][2025] * (1 - hist["tax_rate"][2025]),
-                    "da_margin": (hist["ebitda"][2025] - hist["segment_ebit"][2025]) / hist["sales"][2025],
-                    "da": hist["ebitda"][2025] - hist["segment_ebit"][2025],
-                    "capex_margin": hist["capex"][2025] / hist["sales"][2025],
-                    "capex": hist["capex"][2025],
-                    "delta_nwc": 0,
-                    "fcff": hist["fcf"][2025],
-                }[key]
-            else:
-                value = calcs["forecast"][year][key]
-            ws.cell(r, c, value)
+    for c, year in enumerate(forecast_years, start=2):
+        col = get_column_letter(c)
+        prev_col = get_column_letter(c - 1)
+        if c == 2:
+            ws.cell(4, c, f"=Historical!G4*(1+{col}5)")
+            ws.cell(16, c, f"=({col}4-Historical!G4)*0.01")
+        else:
+            ws.cell(4, c, f"={prev_col}4*(1+{col}5)")
+            ws.cell(16, c, f"=({col}4-{prev_col}4)*0.01")
+        ws.cell(5, c, calcs["forecast"][year]["growth"])
+        ws.cell(6, c, calcs["forecast"][year]["ebitda_margin"])
+        ws.cell(7, c, f"={col}4*{col}6")
+        ws.cell(8, c, calcs["forecast"][year]["ebit_margin"])
+        ws.cell(9, c, f"={col}4*{col}8")
+        ws.cell(10, c, calcs["forecast"][year]["tax_rate"])
+        ws.cell(11, c, f"={col}9*(1-{col}10)")
+        ws.cell(12, c, calcs["forecast"][year]["da_margin"])
+        ws.cell(13, c, f"={col}4*{col}12")
+        ws.cell(14, c, calcs["forecast"][year]["capex_margin"])
+        ws.cell(15, c, f"={col}4*{col}14")
+        ws.cell(17, c, f"={col}11+{col}13-{col}15-{col}16")
     for row_idx in [5, 6, 8, 10, 12, 14]:
-        for c in range(2, 8):
+        for c in range(2, 7):
             ws.cell(row_idx, c).number_format = "0.0%"
     for row_idx in [4, 7, 9, 11, 13, 15, 16, 17]:
-        for c in range(2, 8):
+        for c in range(2, 7):
             ws.cell(row_idx, c).number_format = '#,##0'
     chart = LineChart()
     chart.title = "Projection du CA et du FCFF"
     chart.y_axis.title = "EURm"
-    data = Reference(ws, min_col=2, max_col=7, min_row=4, max_row=17)
-    cats = Reference(ws, min_col=2, max_col=7, min_row=3)
+    data = Reference(ws, min_col=2, max_col=6, min_row=4, max_row=17)
+    cats = Reference(ws, min_col=2, max_col=6, min_row=3)
     chart.add_data(data, titles_from_data=False)
     chart.set_categories(cats)
     chart.height = 7
@@ -721,22 +779,27 @@ def write_excel(calcs: dict):
     ws.append(["EURm"] + years)
     for cell in ws[3]:
         header_cell(cell)
-    dcf_rows = [
-        ("Chiffre d'affaires", "sales"),
-        ("EBIT secteurs", "ebit"),
-        ("NOPAT", "nopat"),
-        ("D&A", "da"),
-        ("Capex", "capex"),
-        ("Variation BFR", "delta_nwc"),
-        ("FCFF", "fcff"),
-        ("Facteur d'actualisation", "discount_factor"),
-        ("PV FCFF", "pv_fcff"),
+    dcf_labels = [
+        "Chiffre d'affaires",
+        "EBIT secteurs",
+        "NOPAT",
+        "D&A",
+        "Capex",
+        "Variation BFR",
+        "FCFF",
+        "Facteur d'actualisation",
+        "PV FCFF",
     ]
-    for r, (label, key) in enumerate(dcf_rows, start=4):
+    for r, label in enumerate(dcf_labels, start=4):
         ws.cell(r, 1, label)
         section_cell(ws.cell(r, 1))
-        for c, year in enumerate(years, start=2):
-            ws.cell(r, c, calcs["dcf"]["detail"][year][key])
+    forecast_row_map = {4: 4, 5: 9, 6: 11, 7: 13, 8: 15, 9: 16, 10: 17}
+    for c, _year in enumerate(years, start=2):
+        col = get_column_letter(c)
+        for dcf_row, forecast_row in forecast_row_map.items():
+            ws.cell(dcf_row, c, f"=Forecast!{col}{forecast_row}")
+        ws.cell(11, c, "=(1+WACC!$B$19)^-(COLUMN()-1)")
+        ws.cell(12, c, f"={col}10*{col}11")
     for r in [11]:
         for c in range(2, 7):
             ws.cell(r, c).number_format = "0.000x"
@@ -745,16 +808,16 @@ def write_excel(calcs: dict):
             ws.cell(r, c).number_format = '#,##0'
     summary_start = 15
     summary = [
-        ("PV des FCFF explicites", calcs["dcf"]["pv_fcff"]),
-        ("Valeur terminale", calcs["dcf"]["terminal_value"]),
-        ("PV valeur terminale", calcs["dcf"]["pv_terminal"]),
-        ("Enterprise value DCF", calcs["dcf"]["enterprise_value"]),
-        ("Dette nette", calcs["market"]["net_debt"]),
-        ("Equity value DCF", calcs["dcf"]["equity_value"]),
-        ("Actions en circulation", calcs["market"]["shares_m"]),
-        ("Valeur par action DCF", calcs["dcf"]["price"]),
-        ("Cours actuel", calcs["market"]["share_price"]),
-        ("Potentiel DCF", calcs["dcf"]["upside"]),
+        ("PV des FCFF explicites", "=SUM(B12:F12)"),
+        ("Valeur terminale", "=F10*(1+WACC!$B$20)/(WACC!$B$19-WACC!$B$20)"),
+        ("PV valeur terminale", "=B17*F11"),
+        ("Enterprise value DCF", "=B16+B18"),
+        ("Dette nette", "=WACC!B8"),
+        ("Equity value DCF", "=B19-B20"),
+        ("Actions en circulation", "=WACC!B6"),
+        ("Valeur par action DCF", "=B21/B22"),
+        ("Cours actuel", "=WACC!B5"),
+        ("Potentiel DCF", "=B23/B24-1"),
     ]
     ws.cell(summary_start, 1, "Synthese")
     header_cell(ws.cell(summary_start, 1))
@@ -769,24 +832,316 @@ def write_excel(calcs: dict):
             ws.cell(i, 2).number_format = '#,##0.0'
     style_sheet(ws)
 
+    # Scenario DCF
+    ws = wb.create_sheet("Scenario_DCF")
+    write_title(ws, "Scenario DCF", "Trois lectures du DCF avec facade simple et calculs detailles caches")
+    ws.append([])
+    ws.append(["Hypothese", "Baissier", "Central", "Haussier"])
+    for cell in ws[3]:
+        header_cell(cell)
+    scenario_inputs = [
+        ("Croissance 2027E", 0.000, "=Forecast!C5", 0.025),
+        ("Croissance 2028E", 0.005, "=Forecast!D5", 0.030),
+        ("Croissance 2029E", 0.010, "=Forecast!E5", 0.030),
+        ("Croissance 2030E", 0.015, "=Forecast!F5", 0.030),
+        ("Marge EBIT 2030", 0.105, "=Forecast!F8", 0.130),
+        ("WACC", "=WACC!B19+0.005", "=WACC!B19", "=WACC!B19-0.005"),
+        ("Croissance terminale", "=WACC!B20-0.005", "=WACC!B20", "=WACC!B20+0.005"),
+    ]
+    for r, (label, bear, base, bull) in enumerate(scenario_inputs, start=4):
+        ws.cell(r, 1, label)
+        ws.cell(r, 2, bear)
+        ws.cell(r, 3, base)
+        ws.cell(r, 4, bull)
+        section_cell(ws.cell(r, 1))
+        for c in range(2, 5):
+            ws.cell(r, c).number_format = "0.0%"
+    ws["A13"] = "Sortie"
+    ws["B13"] = "Baissier"
+    ws["C13"] = "Central"
+    ws["D13"] = "Haussier"
+    for cell in ws[13]:
+        if cell.column <= 4:
+            header_cell(cell)
+    scenario_cols = {2: 8, 3: 15, 4: 22}
+    output_rows = {
+        "EV DCF": 19,
+        "EqV DCF": 20,
+        "Valeur / action": 21,
+        "Potentiel vs cours": 22,
+    }
+    for row_idx, label in enumerate(output_rows.keys(), start=14):
+        ws.cell(row_idx, 1, label)
+        section_cell(ws.cell(row_idx, 1))
+    for input_col, start_col in scenario_cols.items():
+        start_letter = get_column_letter(start_col)
+        year_letters = [get_column_letter(start_col + i) for i in range(5)]
+        ws.cell(4, start_col, {2: "Baissier", 3: "Central", 4: "Haussier"}[input_col])
+        for i, year in enumerate([2026, 2027, 2028, 2029, 2030], start=start_col):
+            ws.cell(5, i, f"{year}E")
+        ws.cell(6, start_col, "=Forecast!B4")
+        ws.cell(7, start_col, "=Forecast!B5")
+        ws.cell(8, start_col, "=Forecast!B8")
+        for offset, year_col in enumerate(range(start_col + 1, start_col + 5), start=1):
+            col = get_column_letter(year_col)
+            prev = get_column_letter(year_col - 1)
+            growth_row = 4 + offset
+            ws.cell(6, year_col, f"={prev}6*(1+${get_column_letter(input_col)}${growth_row})")
+            ws.cell(7, year_col, f"=${get_column_letter(input_col)}${growth_row}")
+            ws.cell(8, year_col, f"=Forecast!$B$8+((${get_column_letter(input_col)}$9-Forecast!$B$8)*{offset}/4)")
+        for col in year_letters:
+            ws[f"{col}9"] = f"={col}6*{col}8"
+            ws[f"{col}10"] = f"={col}9*(1-WACC!$B$15)"
+            forecast_col = get_column_letter(2 + (ord(col) - ord(start_letter)))
+            ws[f"{col}11"] = f"={col}6*Forecast!{forecast_col}12"
+            ws[f"{col}12"] = f"={col}6*Forecast!{forecast_col}14"
+        ws[f"{start_letter}13"] = f"=({start_letter}6-Historical!G4)*0.01"
+        for idx, year_col in enumerate(year_letters[1:], start=1):
+            prev = year_letters[idx - 1]
+            ws[f"{year_col}13"] = f"=({year_col}6-{prev}6)*0.01"
+        for col in year_letters:
+            ws[f"{col}14"] = f"={col}10+{col}11-{col}12-{col}13"
+            ws[f"{col}15"] = f"=(1-${get_column_letter(input_col)}$10)^0"
+        for idx, col in enumerate(year_letters, start=1):
+            ws[f"{col}15"] = f"=1/((1+${get_column_letter(input_col)}$10)^{idx})"
+            ws[f"{col}16"] = f"={col}14*{col}15"
+        last_col = year_letters[-1]
+        ws[f"{start_letter}17"] = f"={last_col}14*(1+${get_column_letter(input_col)}$11)/(${get_column_letter(input_col)}$10-${get_column_letter(input_col)}$11)"
+        ws[f"{start_letter}18"] = f"={start_letter}17*{last_col}15"
+        ws[f"{start_letter}19"] = f"=SUM({start_letter}16:{last_col}16)+{start_letter}18"
+        ws[f"{start_letter}20"] = f"={start_letter}19-WACC!$B$8"
+        ws[f"{start_letter}21"] = f"={start_letter}20/WACC!$B$6"
+        ws[f"{start_letter}22"] = f"={start_letter}21/WACC!$B$5-1"
+        visible_col = get_column_letter(input_col)
+        ws[f"{visible_col}14"] = f"={start_letter}19"
+        ws[f"{visible_col}15"] = f"={start_letter}20"
+        ws[f"{visible_col}16"] = f"={start_letter}21"
+        ws[f"{visible_col}17"] = f"={start_letter}22"
+    for c in range(2, 5):
+        for r in [14, 15, 16]:
+            ws.cell(r, c).number_format = 'EUR 0.0'
+        ws.cell(17, c).number_format = "0.0%"
+    ws["F4"] = "Lecture"
+    header_cell(ws["F4"])
+    ws["F5"] = "2026E reste ancre sur la base Forecast."
+    ws["F6"] = "Le scenario agit sur la croissance 2027E-2030E, la marge 2030, le WACC et g."
+    ws["F7"] = "Les calculs detailles sont caches a droite pour garder une feuille lisible."
+    chart = BarChart()
+    chart.title = "Valeur / action par scenario"
+    chart.y_axis.title = "EUR/action"
+    data = Reference(ws, min_col=2, max_col=4, min_row=16, max_row=16)
+    cats = Reference(ws, min_col=2, max_col=4, min_row=13, max_row=13)
+    chart.add_data(data, titles_from_data=False, from_rows=True)
+    chart.set_categories(cats)
+    chart.height = 6
+    chart.width = 8
+    ws.add_chart(chart, "F9")
+    for col_idx in range(8, 28):
+        ws.column_dimensions[get_column_letter(col_idx)].hidden = True
+    style_sheet(ws)
+
     # Sensitivity
     ws = wb.create_sheet("Sensitivity")
     write_title(ws, "Sensibilite DCF", "Valeur par action selon WACC et croissance terminale")
-    sensitivity = calcs["dcf"]["sensitivity"]
-    wacc_values = list(sensitivity.keys())
-    g_values = list(next(iter(sensitivity.values())).keys())
     ws.append([])
-    ws.append(["WACC \\ g"] + g_values)
+    ws.append(["WACC \\ g", "g -100 bps", "g -50 bps", "g central", "g +50 bps", "g +100 bps"])
     for cell in ws[3]:
         header_cell(cell)
-    for wr in wacc_values:
-        ws.append([wr] + [sensitivity[wr][gr] for gr in g_values])
-    for r in range(4, 9):
+    g_offsets = [-0.010, -0.005, 0.0, 0.005, 0.010]
+    wacc_offsets = [-0.010, -0.005, 0.0, 0.005, 0.010]
+    for c, offset in enumerate(g_offsets, start=2):
+        col = get_column_letter(c)
+        if offset == 0:
+            ws.cell(4, c, "=WACC!$B$20")
+        elif offset > 0:
+            ws.cell(4, c, f"=WACC!$B$20+{offset}")
+        else:
+            ws.cell(4, c, f"=WACC!$B$20{offset}")
+        ws.cell(4, c).number_format = "0.0%"
+    for r, offset in enumerate(wacc_offsets, start=5):
+        if offset == 0:
+            ws.cell(r, 1, "=WACC!$B$19")
+        elif offset > 0:
+            ws.cell(r, 1, f"=WACC!$B$19+{offset}")
+        else:
+            ws.cell(r, 1, f"=WACC!$B$19{offset}")
         ws.cell(r, 1).number_format = "0.0%"
         for c in range(2, 7):
+            col = get_column_letter(c)
+            ws.cell(
+                r,
+                c,
+                (
+                    f"=((DCF!$B$10/(1+$A{r})^1)"
+                    f"+(DCF!$C$10/(1+$A{r})^2)"
+                    f"+(DCF!$D$10/(1+$A{r})^3)"
+                    f"+(DCF!$E$10/(1+$A{r})^4)"
+                    f"+(DCF!$F$10/(1+$A{r})^5)"
+                    f"+((DCF!$F$10*(1+{col}$4))/($A{r}-{col}$4))/((1+$A{r})^5)"
+                    f"-WACC!$B$8)/WACC!$B$6"
+                ),
+            )
             ws.cell(r, c).number_format = 'EUR 0.0'
-    for c in range(2, 7):
-        ws.cell(3, c).number_format = "0.0%"
+    style_sheet(ws)
+
+    # Tornado
+    ws = wb.create_sheet("Tornado")
+    write_title(ws, "Tornado", "Impact des hypotheses cles sur la valeur DCF par action")
+    ws.append([])
+    ws.append(["Variable", "Hypothese basse", "Hypothese haute", "Valeur basse", "Valeur haute", "Amplitude"])
+    for cell in ws[3]:
+        header_cell(cell)
+    tornado_rows = [
+        ("Marge EBIT", "-100 bps", "+100 bps"),
+        ("WACC", "+50 bps", "-50 bps"),
+        ("Capex / CA", "+50 bps", "-50 bps"),
+        ("Croissance terminale", "-50 bps", "+50 bps"),
+        ("Croissance CA", "-100 bps", "+100 bps"),
+    ]
+    for r, (label, low_case, high_case) in enumerate(tornado_rows, start=4):
+        ws.cell(r, 1, label)
+        ws.cell(r, 2, low_case)
+        ws.cell(r, 3, high_case)
+        section_cell(ws.cell(r, 1))
+    helper_specs = [
+        ("sales_low", "sales", -0.010),
+        ("sales_high", "sales", 0.010),
+        ("margin_low", "margin", -0.010),
+        ("margin_high", "margin", 0.010),
+        ("capex_low", "capex", -0.005),
+        ("capex_high", "capex", 0.005),
+    ]
+    helper_price_refs = {}
+    for idx, (name, driver, offset) in enumerate(helper_specs):
+        start_col = 8 + idx * 6
+        letters = [get_column_letter(start_col + i) for i in range(5)]
+        helper_price_refs[name] = f"{letters[0]}30"
+        ws.cell(20, start_col, name)
+        for i, year in enumerate([2026, 2027, 2028, 2029, 2030], start=start_col):
+            ws.cell(21, i, f"{year}E")
+        for j, col in enumerate(letters):
+            forecast_col = get_column_letter(2 + j)
+            if driver == "sales":
+                if j == 0:
+                    ws[f"{col}22"] = f"=Historical!G4*(1+(Forecast!{forecast_col}5{offset:+.3f}))"
+                else:
+                    prev = letters[j - 1]
+                    ws[f"{col}22"] = f"={prev}22*(1+(Forecast!{forecast_col}5{offset:+.3f}))"
+            else:
+                ws[f"{col}22"] = f"=Forecast!{forecast_col}4"
+            if driver == "margin":
+                ws[f"{col}23"] = f"=Forecast!{forecast_col}8{offset:+.3f}"
+            else:
+                ws[f"{col}23"] = f"=Forecast!{forecast_col}8"
+            ws[f"{col}24"] = f"={col}22*{col}23"
+            ws[f"{col}25"] = f"={col}24*(1-WACC!$B$15)"
+            ws[f"{col}26"] = f"={col}22*Forecast!{forecast_col}12"
+            if driver == "capex":
+                ws[f"{col}27"] = f"={col}22*(Forecast!{forecast_col}14{offset:+.3f})"
+            else:
+                ws[f"{col}27"] = f"={col}22*Forecast!{forecast_col}14"
+            if j == 0:
+                ws[f"{col}28"] = f"=({col}22-Historical!G4)*0.01"
+            else:
+                prev = letters[j - 1]
+                ws[f"{col}28"] = f"=({col}22-{prev}22)*0.01"
+            ws[f"{col}29"] = f"={col}25+{col}26-{col}27-{col}28"
+        last_col = letters[-1]
+        first_col = letters[0]
+        ws[f"{first_col}30"] = (
+            f"=(({letters[0]}29*DCF!B11)+({letters[1]}29*DCF!C11)+({letters[2]}29*DCF!D11)"
+            f"+({letters[3]}29*DCF!E11)+({letters[4]}29*DCF!F11)"
+            f"+(({last_col}29*(1+WACC!$B$20)/(WACC!$B$19-WACC!$B$20))*DCF!F11)-WACC!$B$8)/WACC!$B$6"
+        )
+    ws["D4"] = f"={helper_price_refs['margin_low']}"
+    ws["E4"] = f"={helper_price_refs['margin_high']}"
+    ws["D5"] = "=Sensitivity!D8"
+    ws["E5"] = "=Sensitivity!D6"
+    ws["D6"] = f"={helper_price_refs['capex_high']}"
+    ws["E6"] = f"={helper_price_refs['capex_low']}"
+    ws["D7"] = "=Sensitivity!C7"
+    ws["E7"] = "=Sensitivity!E7"
+    ws["D8"] = f"={helper_price_refs['sales_low']}"
+    ws["E8"] = f"={helper_price_refs['sales_high']}"
+    for r in range(4, 9):
+        ws.cell(r, 6, f"=E{r}-D{r}")
+        for c in range(4, 7):
+            ws.cell(r, c).number_format = 'EUR 0.0'
+    chart = BarChart()
+    chart.type = "bar"
+    chart.title = "Sensibilite des variables cles"
+    chart.x_axis.title = "EUR/action"
+    data = Reference(ws, min_col=4, max_col=5, min_row=3, max_row=8)
+    cats = Reference(ws, min_col=1, max_col=1, min_row=4, max_row=8)
+    chart.add_data(data, titles_from_data=True)
+    chart.set_categories(cats)
+    chart.height = 6
+    chart.width = 8
+    ws.add_chart(chart, "H4")
+    for col_idx in range(8, 44):
+        ws.column_dimensions[get_column_letter(col_idx)].hidden = True
+    style_sheet(ws)
+
+    # Buyback impact
+    ws = wb.create_sheet("Buyback_Impact")
+    write_title(ws, "Buyback Impact", "Accretion par action si Michelin rachete ses titres sous la valeur intrinseque")
+    ws.append([])
+    ws.append(["Input", "Valeur"])
+    for cell in ws[3]:
+        header_cell(cell)
+    buyback_inputs = [
+        ("Equity value DCF de base", "=DCF!B21"),
+        ("Actions de base", "=WACC!B6"),
+        ("Valeur intrinseque / action", "=DCF!B23"),
+        ("Prix moyen de rachat", "=WACC!B5"),
+        ("Programme minimum 2026-2028", 2000),
+    ]
+    for r, (label, value) in enumerate(buyback_inputs, start=4):
+        ws.cell(r, 1, label)
+        ws.cell(r, 2, value)
+        section_cell(ws.cell(r, 1))
+    for r in [4, 6, 7]:
+        ws.cell(r, 2).number_format = 'EUR 0.0'
+    ws.cell(5, 2).number_format = '#,##0.0'
+    ws.cell(8, 2).number_format = '#,##0'
+
+    ws["A11"] = "Programme (EURm)"
+    ws["B11"] = "Actions retirees"
+    ws["C11"] = "Actions post-rachat"
+    ws["D11"] = "EqV post-rachat"
+    ws["E11"] = "Valeur/action"
+    ws["F11"] = "Accretion"
+    for c in range(1, 7):
+        header_cell(ws.cell(11, c))
+    amounts = [0, 500, 1000, 1500, 2000, 3000, 4000]
+    for i, amount in enumerate(amounts, start=12):
+        ws.cell(i, 1, amount)
+        ws.cell(i, 2, f"=A{i}/$B$7")
+        ws.cell(i, 3, f"=$B$5-B{i}")
+        ws.cell(i, 4, f"=$B$4-A{i}")
+        ws.cell(i, 5, f"=D{i}/C{i}")
+        ws.cell(i, 6, f"=E{i}/$B$6-1")
+        ws.cell(i, 1).number_format = '#,##0'
+        ws.cell(i, 2).number_format = '#,##0.0'
+        ws.cell(i, 3).number_format = '#,##0.0'
+        ws.cell(i, 4).number_format = 'EUR 0.0'
+        ws.cell(i, 5).number_format = 'EUR 0.0'
+        ws.cell(i, 6).number_format = '0.0%'
+    ws["H4"] = "Lecture"
+    header_cell(ws["H4"])
+    ws["H5"] = "Le buyback detruit d'abord de l'equity value du montant depense."
+    ws["H6"] = "Il cree de la valeur par action seulement si le prix de rachat est inferieur a la valeur intrinseque."
+    ws["H7"] = "Le tableau montre l'accretion theoriquement impliquee pour plusieurs tailles de programme."
+    chart = LineChart()
+    chart.title = "Valeur par action apres rachat"
+    chart.y_axis.title = "EUR/action"
+    data = Reference(ws, min_col=5, max_col=5, min_row=11, max_row=18)
+    cats = Reference(ws, min_col=1, max_col=1, min_row=12, max_row=18)
+    chart.add_data(data, titles_from_data=True)
+    chart.set_categories(cats)
+    chart.height = 6
+    chart.width = 8
+    ws.add_chart(chart, "H10")
     style_sheet(ws)
 
     # Football field
@@ -796,17 +1151,10 @@ def write_excel(calcs: dict):
     ws.append(["Methode", "Bas", "Central", "Haut", "Commentaire"])
     for cell in ws[3]:
         header_cell(cell)
-    comp_low = min(item["price_low"] for item in calcs["comp_metrics"].values())
-    comp_high = max(item["price_high"] for item in calcs["comp_metrics"].values())
-    dcf_prices = [p for row in sensitivity.values() for p in row.values()]
-    rows = [
-        ("Cours actuel", calcs["market"]["share_price"], calcs["market"]["share_price"], calcs["market"]["share_price"], "Reference marche StockAnalysis, 20 avril 2026"),
-        ("Comparables", comp_low, calcs["recommendation"]["comps_mid_price"], comp_high, "Application quartiles / mediane aux metrics 2026E"),
-        ("DCF", min(dcf_prices), calcs["dcf"]["price"], max(dcf_prices), "Sensibilite WACC et croissance terminale"),
-        ("Objectif retenu", calcs["recommendation"]["blended_target"], calcs["recommendation"]["blended_target"], calcs["recommendation"]["blended_target"], "Moyenne du DCF central et des comparables centraux"),
-    ]
-    for row in rows:
-        ws.append(row)
+    ws.append(["Cours actuel", "=WACC!B5", "=WACC!B5", "=WACC!B5", "Reference marche StockAnalysis, 20 avril 2026"])
+    ws.append(["Comparables", "=MIN(Comps!E13:E15)", "=AVERAGE(Comps!F13:F15)", "=MAX(Comps!G13:G15)", "Application quartiles / mediane aux metrics 2026E"])
+    ws.append(["DCF", "=MIN(Sensitivity!B5:F9)", "=DCF!B23", "=MAX(Sensitivity!B5:F9)", "Sensibilite WACC et croissance terminale"])
+    ws.append(["Objectif retenu", "=AVERAGE(C6,C7)", "=AVERAGE(C6,C7)", "=AVERAGE(C6,C7)", "Moyenne du DCF central et des comparables centraux"])
     for r in range(4, 8):
         for c in range(2, 5):
             ws.cell(r, c).number_format = 'EUR 0.0'
@@ -819,6 +1167,9 @@ def write_excel(calcs: dict):
             for cell in row:
                 cell.alignment = Alignment(vertical="center", wrap_text=True)
 
+    wb.calculation.calcMode = "auto"
+    wb.calculation.fullCalcOnLoad = True
+    wb.calculation.forceFullCalc = True
     wb.save(EXCEL_OUT)
 
 
